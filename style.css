@@ -1,80 +1,246 @@
+/* ==========================================================================
+   Global Reset & Navy Accent Colors
+   ========================================================================== */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
 body {
-
   font-family: Arial, sans-serif;
-
   max-width: 900px;
-
   margin: auto;
-
   padding: 20px;
-
-  background-color: #f5f5f5;
-
+  background-color: #ffffff; /* Clean white background */
+  color: #1b2a4a;            /* Dark navy body text */
+  line-height: 1.6;
 }
 
-
-
-header {
-
-  text-align: center;
-
-  margin-bottom: 40px;
-
-}
-
-
-
-section {
-
-  margin-bottom: 30px;
-
-}
-
-
-
-.project {
-
-  background: white;
-
-  padding: 20px;
-
-  border-radius: 8px;
-
-  border-left: 5px solid #007acc;
-
-}
-
-
-
-}
-
+/* ==========================================================================
+   Navigation Bar
+   ========================================================================== */
 nav {
-
   text-align: center;
-
-  margin-bottom: 30px;
-
+  margin-bottom: 35px;
+  padding: 12px 0;
+  background-color: #0a192f; /* Deep Navy */
+  border-radius: 6px;
 }
-
-
 
 nav a {
-
   margin: 0 15px;
-
   text-decoration: none;
-
   font-weight: bold;
-
-  color: #333;
-
+  color: #ffffff;
+  transition: color 0.2s ease;
 }
 
-
-
 nav a:hover {
+  color: #64ffda; /* Light cyan highlight */
+}
 
-  color: #007acc;
+/* ==========================================================================
+   Header
+   ========================================================================== */
+header {
+  text-align: center;
+  margin-bottom: 40px;
+  padding-bottom: 20px;
+  border-bottom: 2px solid #0a192f;
+}
 
-} 
+header h1 {
+  font-size: 2.4rem;
+  color: #0a192f;
+  margin-bottom: 5px;
+}
 
+header .subtitle {
+  font-size: 1.1rem;
+  font-weight: bold;
+  color: #1e3a8a; /* Navy accent */
+  margin-bottom: 4px;
+}
+
+header .focus-areas {
+  font-size: 0.95rem;
+  color: #4b5563;
+}
+
+/* ==========================================================================
+   Section Headings & Aesthetic About Box
+   ========================================================================== */
+section {
+  margin-bottom: 40px;
+}
+
+h2 {
+  color: #0a192f;
+  margin-bottom: 15px;
+  font-size: 1.5rem;
+}
+
+/* About Me Box */
+.about-box {
+  background-color: #f0f4f8; /* Subtle blue-tinted background */
+  border-left: 6px solid #0a192f; /* Dark Navy border */
+  padding: 22px;
+  border-radius: 6px;
+}
+
+.about-box h2 {
+  margin-top: 0;
+  margin-bottom: 10px;
+  color: #0a192f;
+}
+
+/* ==========================================================================
+   Technical Skills
+   ========================================================================== */
+.skills-container {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.skill-group {
+  background-color: #f8fafc;
+  padding: 14px 18px;
+  border-left: 4px solid #1e3a8a;
+  border-radius: 4px;
+}
+
+.skill-group h3 {
+  font-size: 1rem;
+  color: #0a192f;
+  margin-bottom: 4px;
+}
+
+.skill-group p {
+  font-size: 0.95rem;
+  color: #334155;
+}
+
+/* ==========================================================================
+   Experience Cards
+   ========================================================================== */
+.experience-card {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-left: 5px solid #0a192f;
+  padding: 18px 20px;
+  margin-bottom: 16px;
+  border-radius: 6px;
+}
+
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 4px;
+}
+
+.card-header h3 {
+  font-size: 1.1rem;
+  color: #0a192f;
+}
+
+.role-org {
+  font-weight: bold;
+  font-size: 0.9rem;
+  color: #1e3a8a;
+  margin-bottom: 10px;
+}
+
+.experience-card ul {
+  margin-left: 20px;
+  color: #334155;
+  font-size: 0.95rem;
+}
+
+.experience-card li {
+  margin-bottom: 4px;
+}
+
+/* Status Badges */
+.badge {
+  font-size: 0.75rem;
+  font-weight: bold;
+  padding: 4px 10px;
+  border-radius: 12px;
+  text-transform: uppercase;
+}
+
+.badge.in-progress {
+  background-color: #dbeafe;
+  color: #1e40af;
+}
+
+.badge.future {
+  background-color: #fef3c7;
+  color: #92400e;
+}
+
+/* ==========================================================================
+   Projects Section Button Link
+   ========================================================================== */
+.projects-section {
+  text-align: center;
+  padding: 25px;
+  background-color: #f0f4f8;
+  border-radius: 6px;
+  border: 1px dashed #1e3a8a;
+}
+
+.projects-link-btn {
+  display: inline-block;
+  background-color: #0a192f;
+  color: #ffffff;
+  font-size: 1.2rem;
+  font-weight: bold;
+  padding: 12px 30px;
+  border-radius: 6px;
+  text-decoration: none;
+  margin: 10px 0 6px 0;
+  transition: background-color 0.2s ease;
+}
+
+.projects-link-btn:hover {
+  background-color: #1e3a8a;
+}
+
+.projects-subtext {
+  font-size: 0.9rem;
+  color: #4b5563;
+  font-style: italic;
+}
+
+/* ==========================================================================
+   Footer & Connect With Me
+   ========================================================================== */
+footer {
+  text-align: center;
+  margin-top: 40px;
+  padding-top: 25px;
+  border-top: 2px solid #0a192f;
+}
+
+.contact-links {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  flex-wrap: wrap;
+  margin-top: 15px;
+}
+
+.contact-links a {
+  color: #1e3a8a;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.contact-links a:hover {
+  text-decoration: underline;
+  color: #0a192f;
+}
