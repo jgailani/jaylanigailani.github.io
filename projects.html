@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Jaylani Gailani | Engineering Projects</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Top Navigation Bar -->
+  <nav>
+    <a href="index.html">← Back to Main Site</a>
+    <a href="#turret">Face-Tracking Turret</a>
+    <a href="#contact">Contact</a>
+  </nav>
+
+  <header>
+    <h1>Featured Engineering Projects</h1>
+    <p class="subtitle">Detailed Breakdown of Hardware, Embedded Systems & Software Designs</p>
+  </header>
+
+  <main>
+    <!-- PROJECT 1: Face-Tracking Camera Turret -->
+    <article id="turret" class="project-detail-card">
+      <div class="project-header">
+        <h2>Face-Tracking Camera Turret</h2>
+        <span class="badge completed">Completed</span>
+      </div>
+
+      <p class="project-tags">
+        <strong>Technologies & Tools:</strong> Python, OpenCV, Arduino (C++), 3D Printing (CAD), Closed-Loop Control, Serial Communication, External Power Electronics
+      </p>
+
+      <p class="project-summary">
+        Designed and built a 2-axis (pan-tilt) computer-vision camera turret that detects and tracks a human face in real time. The system splits duties between a PC (OpenCV face detection) and an Arduino Uno (microcontroller motor control) linked via USB serial communication.
+      </p>
+
+      <!-- Optional Video Embed/Link Section -->
+      <div class="video-container">
+        <h3>Project Demonstration & Voiceover</h3>
+        <p><em>[Insert your video embed here or upload your video clip showing the turret in action]</em></p>
+      </div>
+
+      <h3>System Architecture & Hardware Design</h3>
+      <ul class="project-bullets">
+        <li><strong>Dual-System Architecture:</strong> Offloaded heavy vision processing to Python/OpenCV while running real-time servo timing and slew-rate limiting on the Arduino Uno.</li>
+        <li><strong>Custom 3D-Printed Mount:</strong> Designed a custom pan-tilt bracket assembly to securely mount the USB camera and high-torque SG90 positional servos.</li>
+        <li><strong>Power Isolation:</strong> Powered the servos via an isolated external 5V power supply to prevent micro-controller brownouts and current spikes under high load.</li>
+        <li><strong>Proportional Control & Dead-Zone Logic:</strong> Implemented proportional angle adjustments based on frame offsets, paired with an independent X/Y dead zone to prevent endless micro-jitter.</li>
+      </ul>
+
+      <h3>Real-World Engineering Challenges & Mechanical Tuning</h3>
+      <div class="callout-box">
+        <ul class="project-bullets">
+          <li><strong>Camera Weight & Mechanical Drag:</strong> The heavy camera mass caused severe servo drag and structural sag. Solved by physically mounting the base to a wood foundation, recalibrating the tracking speed/gain, and adjusting code parameters to account for gravity drag.</li>
+          <li><strong>Momentum & Over-shooting:</strong> Fast face tracking caused heavy inertia, making servos fly past targets. Added **slew-rate limiting** in the Arduino sketch to step motor angles gradually (preventing mechanical shear) and slowed down decision intervals to 10 Hz.</li>
+          <li><strong>OpenCV Cascade Gotcha:</strong> Resolved broken cascade builds by pinning software releases strictly to stable releases (`4.10.0.84`).</li>
+        </ul>
+      </div>
+    </article>
+  </main>
+
+  <footer id="contact">
+    <p>
+      <a href="index.html">Main Portfolio</a> | 
+      <a href="mailto:jaylanigailani90@gmail.com">Email Me</a> | 
+      <a href="https://linkedin.com/in/jaylani-gailani-4642782b0" target="_blank">LinkedIn</a>
+    </p>
+  </footer>
+
+</body>
+</html>
