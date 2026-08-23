@@ -40,28 +40,28 @@
       <div class="image-gallery">
         
         <div class="img-container">
-          <img src="" alt="KiCad Schematic">
+          <img src="schematic.PNG" alt="KiCad Schematic">
           <p class="img-caption">1. Full System Schematic in KiCad</p>
         </div>
 
         <div class="img-container">
-          <img src="PASTE_YOUR_PCB_LAYOUT_IMAGE_URL_HERE" alt="2-Layer PCB Layout">
+          <img src="pcb_layout.PNG" alt="2-Layer PCB Layout">
           <p class="img-caption">2. Two-Layer PCB Layout & Traces</p>
         </div>
 
         <div class="img-container">
-          <img src="PASTE_YOUR_3D_VIEW_IMAGE_URL_HERE" alt="3D View of PCB">
+          <img src="pcb-3d.PNG" alt="3D View of PCB">
           <p class="img-caption">3. 3D Render View</p>
         </div>
 
         <div class="img-container">
-          <img src="PASTE_YOUR_DRC_IMAGE_URL_HERE" alt="DRC Clean Result">
+          <img src="drc-check.PNG" alt="DRC Clean Result">
           <p class="img-caption">4. KiCad DRC Passing 0 Errors</p>
         </div>
 
         <div class="img-container">
-          <img src="PASTE_YOUR_PHYSICAL_BOARD_IMAGE_URL_HERE" alt="Physical Board Arrival">
-          <p class="img-caption">5. Physical Assembled/Manufactured PCB</p>
+          <img src="physical-board.PNG" alt="Physical Board Arrival" onerror="this.style.display='none'">
+          <p class="img-caption">5. Physical Assembled PCB (Awaiting Delivery)</p>
         </div>
 
       </div>
@@ -77,8 +77,8 @@
       <div class="callout-box">
         <ul class="project-bullets">
           <li><strong>Schematic vs. Physical Layout:</strong> Moving past basic logic connections meant actually dealing with component spacing, physical pin clearances, and trace routing on a compact board.</li>
-          <li><strong>Ground Plane Strategy:</strong> Instead of manually routing individual ground traces, I assigned a continuous copper pour on the bottom layer (`B.Cu`) and dropped vias down from top-layer GND pads. This simplified the board and improved ground continuity.</li>
-          <li><strong>Strategic Use of Vias:</strong> When 3.3V lines around the BME280 got crowded by adjacent pads, I used top-to-bottom via transitions (`F.Cu → via → B.Cu → via → F.Cu`) to route underneath clogged areas rather than forcing tight traces on one layer.</li>
+          <li><strong>Ground Plane Strategy:</strong> Instead of manually routing individual ground traces, I assigned a continuous copper pour on the bottom layer (<code>B.Cu</code>) and dropped vias down from top-layer GND pads. This simplified the board and improved ground continuity.</li>
+          <li><strong>Strategic Use of Vias:</strong> When 3.3V lines around the BME280 got crowded by adjacent pads, I used top-to-bottom via transitions (<code>F.Cu → via → B.Cu → via → F.Cu</code>) to route underneath clogged areas rather than forcing tight traces on one layer.</li>
           <li><strong>DRC as an Engineering Check:</strong> I initially thought "no ratsnest" meant I was finished, but running KiCad's Design Rules Checker caught actual fabrication issues like hole size constraints (0.2mm actual vs. 0.3mm rule limits). Interpreting these errors helped me align the design with real manufacturer specs (JLCPCB) rather than guessing.</li>
           <li><strong>Troubleshooting Over Restarting:</strong> When power routing got messy or DRC threw violations, I focused on incremental fixes—adding missing bypass caps, dropping vias, and adjusting clearances rather than wiping the board to start from scratch.</li>
         </ul>
