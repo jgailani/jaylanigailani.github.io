@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Custom ESP32 Sensor Hub PCB | Jaylani Gailani</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Top Navigation Bar -->
+  <nav>
+    <a href="projects.html">← Back to Projects</a>
+    <a href="index.html">Main Portfolio</a>
+    <a href="#contact">Contact</a>
+  </nav>
+
+  <header>
+    <h1>Custom ESP32 Sensor Hub PCB</h1>
+    <p class="subtitle">Hardware Design, Schematic Capture & 2-Layer PCB Layout in KiCad</p>
+  </header>
+
+  <main>
+    <article class="project-detail-card">
+      <div class="project-header">
+        <h2>Project Overview</h2>
+        <span class="badge completed">Completed</span>
+      </div>
+
+      <p class="project-tags">
+        <strong>Tools & Components:</strong> KiCad, ESP32-S3-WROOM-1, BME280, MPU-6050, AP2112K-3.3, USB-C, I²C, JLCPCB Specs
+      </p>
+
+      <p class="project-summary">
+        Designed a compact 2-layer development platform centered around an ESP32-S3 microcontroller. The board integrates environmental sensing (BME280), motion tracking (MPU-6050), regulated 3.3V power, USB-C communication, user controls, and an expansion header for general I/O.
+      </p>
+
+      <!-- Image Gallery Section -->
+      <h3>Design & Manufacturing Views</h3>
+      <div class="image-gallery">
+        
+        <div class="img-container">
+          <img src="" alt="KiCad Schematic">
+          <p class="img-caption">1. Full System Schematic in KiCad</p>
+        </div>
+
+        <div class="img-container">
+          <img src="PASTE_YOUR_PCB_LAYOUT_IMAGE_URL_HERE" alt="2-Layer PCB Layout">
+          <p class="img-caption">2. Two-Layer PCB Layout & Traces</p>
+        </div>
+
+        <div class="img-container">
+          <img src="PASTE_YOUR_3D_VIEW_IMAGE_URL_HERE" alt="3D View of PCB">
+          <p class="img-caption">3. 3D Render View</p>
+        </div>
+
+        <div class="img-container">
+          <img src="PASTE_YOUR_DRC_IMAGE_URL_HERE" alt="DRC Clean Result">
+          <p class="img-caption">4. KiCad DRC Passing 0 Errors</p>
+        </div>
+
+        <div class="img-container">
+          <img src="PASTE_YOUR_PHYSICAL_BOARD_IMAGE_URL_HERE" alt="Physical Board Arrival">
+          <p class="img-caption">5. Physical Assembled/Manufactured PCB</p>
+        </div>
+
+      </div>
+
+      <h3>Hardware Architecture</h3>
+      <ul class="project-bullets">
+        <li><strong>Microcontroller & Power:</strong> Powered via USB-C feeding an AP2112K-3.3 linear regulator to drive the ESP32-S3 module and onboard sensors cleanly.</li>
+        <li><strong>Sensor Bus:</strong> Shared I²C lines (SDA/SCL) routing to both the BME280 (temperature/humidity/pressure) and MPU-6050 (accelerometer/gyroscope).</li>
+        <li><strong>User Controls & I/O:</strong> Dedicated Reset button, programmable user button, status LED, and broken-out GPIO header pins.</li>
+      </ul>
+
+      <h3>Key Layout Concepts & Real Design Lessons</h3>
+      <div class="callout-box">
+        <ul class="project-bullets">
+          <li><strong>Schematic vs. Physical Layout:</strong> Moving past basic logic connections meant actually dealing with component spacing, physical pin clearances, and trace routing on a compact board.</li>
+          <li><strong>Ground Plane Strategy:</strong> Instead of manually routing individual ground traces, I assigned a continuous copper pour on the bottom layer (`B.Cu`) and dropped vias down from top-layer GND pads. This simplified the board and improved ground continuity.</li>
+          <li><strong>Strategic Use of Vias:</strong> When 3.3V lines around the BME280 got crowded by adjacent pads, I used top-to-bottom via transitions (`F.Cu → via → B.Cu → via → F.Cu`) to route underneath clogged areas rather than forcing tight traces on one layer.</li>
+          <li><strong>DRC as an Engineering Check:</strong> I initially thought "no ratsnest" meant I was finished, but running KiCad's Design Rules Checker caught actual fabrication issues like hole size constraints (0.2mm actual vs. 0.3mm rule limits). Interpreting these errors helped me align the design with real manufacturer specs (JLCPCB) rather than guessing.</li>
+          <li><strong>Troubleshooting Over Restarting:</strong> When power routing got messy or DRC threw violations, I focused on incremental fixes—adding missing bypass caps, dropping vias, and adjusting clearances rather than wiping the board to start from scratch.</li>
+        </ul>
+      </div>
+    </article>
+  </main>
+
+  <footer id="contact">
+    <p>
+      <a href="projects.html">Projects Directory</a> | 
+      <a href="index.html">Main Portfolio</a> | 
+      <a href="mailto:jaylanigailani90@gmail.com">Email Me</a>
+    </p>
+  </footer>
+
+</body>
+</html>
