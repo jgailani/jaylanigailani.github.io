@@ -9,12 +9,20 @@
 
 body {
   font-family: Arial, sans-serif;
-  max-width: 900px;
-  margin: auto;
-  padding: 20px;
-  background-color: #ffffff; /* Clean white background */
-  color: #1b2a4a;            /* Dark navy body text */
+  margin: 0;
+  padding: 0;
+  background-color: #ffffff;
+  color: #1b2a4a;
   line-height: 1.6;
+  overflow-x: hidden;
+}
+
+.content-wrapper, main, footer, section {
+  max-width: 900px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 20px;
+  padding-right: 20px;
 }
 
 /* ==========================================================================
@@ -403,29 +411,28 @@ footer {
   margin: 0 !important;
 }
 /* ==========================================================================
-   Interactive Hero Screen & Clock Dial Navigation
+   Full Screen Width Hero Screen
    ========================================================================== */
-html {
-  scroll-behavior: smooth; /* Enables smooth scrolling when clicking links */
-}
-
 .hero-screen {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  min-height: 90vh;
-  padding: 40px 0;
+  width: 100vw;
+  height: 90vh;
+  margin: 0;
+  padding: 0 5vw 0 0; /* Flush to left screen boundary */
   border-bottom: 2px solid #0a192f;
-  margin-bottom: 40px;
+  box-sizing: border-box;
 }
 
-/* Dial & Arrow Container */
+/* Dial Container pinned to absolute left edge */
 .dial-container {
   position: relative;
-  width: 450px;
-  height: 500px;
+  width: 480px;
+  height: 600px;
   display: flex;
   align-items: center;
+  margin-left: -10px; /* Pulls pivot tight against screen edge */
 }
 
 .clock-svg {
@@ -442,44 +449,49 @@ html {
   transform-origin: 0 0;
 }
 
-/* Navigation Links Arranged along the Arc */
+/* Clear links layout following arc */
 .dial-nav {
   position: absolute;
-  left: 175px;
+  left: 210px;
   display: flex;
   flex-direction: column;
-  gap: 28px;
+  gap: 32px;
 }
 
 .dial-link {
-  font-size: 1.5rem;
-  font-weight: bold;
+  font-size: 1.6rem;
+  font-weight: 800;
   color: #0a192f;
   text-decoration: none;
+  background: transparent !important; /* Removes navy background block */
+  padding: 0 !important;
   transition: color 0.2s ease, transform 0.2s ease;
   display: inline-block;
 }
 
 .dial-link:hover {
-  color: #1e3a8a;
-  transform: translateX(8px);
+  color: #2563eb;
+  transform: translateX(10px);
 }
 
-/* Right Side Portrait Styling */
+/* Arc staggering alignment */
+.dial-link[href="#about"] { margin-left: -10px; }
+.dial-link[href="#skills"] { margin-left: 25px; }
+.dial-link[href="#experience"] { margin-left: 45px; }
+.dial-link[href="#projects"] { margin-left: 25px; }
+.dial-link[href="#contact"] { margin-left: -10px; }
+
+/* Right Portrait Placement */
 .portrait-container {
-  flex: 1;
   display: flex;
-  justify-content: center;
+  justify-content: flex-end;
   align-items: center;
 }
 
 .portrait-img {
-  max-width: 320px;
+  max-width: 380px;
   width: 100%;
   height: auto;
-  border-radius: 12px;
-}
-
-.content-wrapper {
-  padding-top: 20px;
+  border-radius: 16px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
 }
