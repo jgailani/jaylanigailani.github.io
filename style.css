@@ -7,66 +7,430 @@
   padding: 0;
 }
 
+:root {
+  --navy-deep: #0a192f;
+  --navy-accent: #1e3a8a;
+  --cyan: #64ffda;
+  --slate: #334155;
+  --muted: #4b5563;
+  --paper: #ffffff;
+  --panel: #f0f4f8;
+
+  --font-display: 'Space Grotesk', Arial, sans-serif;
+  --font-mono: 'JetBrains Mono', 'Courier New', monospace;
+  --font-body: Arial, sans-serif;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
 body {
-  font-family: Arial, sans-serif;
-  max-width: 900px;
-  margin: auto;
-  padding: 20px;
-  background-color: #ffffff; /* Clean white background */
-  color: #1b2a4a;            /* Dark navy body text */
+  font-family: var(--font-body);
+  background-color: var(--paper);
+  color: #1b2a4a;
   line-height: 1.6;
 }
 
-/* ==========================================================================
-   Navigation Bar
-   ========================================================================== */
-nav {
-  text-align: center;
-  margin-bottom: 35px;
-  padding: 12px 0;
-  background-color: #0a192f; /* Deep Navy */
-  border-radius: 6px;
+/* Content below the hero keeps the original centered column */
+.page-content {
+  max-width: 900px;
+  margin: auto;
+  padding: 20px;
 }
 
-nav a {
+/* ==========================================================================
+   Sticky utility nav (appears once the hero has scrolled out of view)
+   ========================================================================== */
+.sticky-nav {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  text-align: center;
+  padding: 12px 0;
+  background-color: var(--navy-deep);
+  opacity: 0;
+  transform: translateY(-100%);
+  transition: opacity 0.25s ease, transform 0.25s ease;
+  pointer-events: none;
+}
+
+.sticky-nav.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+.sticky-nav a {
   margin: 0 15px;
   text-decoration: none;
   font-weight: bold;
+  font-family: var(--font-body);
   color: #ffffff;
   transition: color 0.2s ease;
 }
 
-nav a:hover {
-  color: #64ffda; /* Light cyan highlight */
+.sticky-nav a:hover {
+  color: var(--cyan);
 }
 
 /* ==========================================================================
-   Header
+   HERO — instrument-panel clock · curved nav rail · portrait
    ========================================================================== */
-header {
-  text-align: center;
-  margin-bottom: 40px;
-  padding-bottom: 20px;
-  border-bottom: 2px solid #0a192f;
+.hero {
+  position: relative;
+  min-height: 100vh;
+  width: 100%;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 40px 6vw 90px;
+  background: var(--paper);
 }
 
-header h1 {
-  font-size: 2.4rem;
-  color: #0a192f;
-  margin-bottom: 5px;
+.hero-grid-lines {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(10, 25, 47, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(10, 25, 47, 0.05) 1px, transparent 1px);
+  background-size: 42px 42px;
+  mask-image: radial-gradient(ellipse 80% 70% at 50% 40%, #000 40%, transparent 90%);
+  pointer-events: none;
 }
 
-header .subtitle {
-  font-size: 1.1rem;
-  font-weight: bold;
-  color: #1e3a8a; /* Navy accent */
-  margin-bottom: 4px;
+.hero-grid {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: minmax(160px, 280px) 1fr minmax(200px, 300px);
+  align-items: center;
+  gap: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+  width: 100%;
+  min-height: 55vh;
 }
 
-header .focus-areas {
+/* ---- Clock instrument ---- */
+.hero-instrument {
+  display: flex;
+  justify-content: center;
+}
+
+.clock {
+  width: min(230px, 80%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+}
+
+.clock-face {
+  width: 100%;
+  height: auto;
+  filter: drop-shadow(0 6px 18px rgba(10, 25, 47, 0.12));
+}
+
+.clock-ring-outer {
+  fill: #ffffff;
+  stroke: var(--navy-deep);
+  stroke-width: 2.5;
+}
+
+.clock-ring-inner {
+  fill: none;
+  stroke: #cbd5e1;
+  stroke-width: 1;
+}
+
+.clock-tick-major {
+  stroke: var(--navy-deep);
+  stroke-width: 2;
+}
+
+.clock-tick-minor {
+  stroke: #94a3b8;
+  stroke-width: 1;
+}
+
+.clock-numeral {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 600;
+  fill: var(--navy-deep);
+  text-anchor: middle;
+  dominant-baseline: middle;
+}
+
+.hand {
+  stroke-linecap: round;
+}
+
+.hand-hour {
+  stroke: var(--navy-deep);
+  stroke-width: 4;
+}
+
+.hand-minute {
+  stroke: var(--navy-deep);
+  stroke-width: 3;
+}
+
+.hand-second {
+  stroke: #d97706;
+  stroke-width: 1.5;
+}
+
+.clock-hub {
+  fill: var(--navy-deep);
+}
+
+.clock-caption {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+}
+
+.clock-label {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.15em;
+  color: var(--muted);
+}
+
+.clock-digital {
+  font-family: var(--font-mono);
   font-size: 0.95rem;
-  color: #4b5563;
+  font-weight: 600;
+  color: var(--navy-deep);
 }
+
+/* ---- Curved nav rail ---- */
+.hero-nav-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 380px;
+}
+
+.rail-svg {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-62%, -50%);
+  width: 140px;
+  height: 100%;
+  max-height: 420px;
+  pointer-events: none;
+}
+
+.rail-path {
+  fill: none;
+  stroke: #cbd5e1;
+  stroke-width: 2;
+  stroke-dasharray: 4 6;
+}
+
+.pointer-arrow {
+  position: absolute;
+  left: 0;
+  top: 50%;
+  width: 90px;
+  transform: translateY(-50%);
+  transition: top 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+  pointer-events: none;
+}
+
+.pointer-arrow svg {
+  width: 100%;
+  height: auto;
+  overflow: visible;
+}
+
+.pointer-arrow path {
+  fill: none;
+  stroke: var(--navy-deep);
+  stroke-width: 2.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.hero-nav {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 26px;
+  padding-left: 100px;
+}
+
+.hero-nav-link {
+  font-family: var(--font-display);
+  font-size: 1.6rem;
+  font-weight: 500;
+  text-decoration: none;
+  color: #94a3b8;
+  transition: color 0.25s ease, transform 0.25s ease;
+  width: fit-content;
+}
+
+.hero-nav-link:nth-child(1) { transform: translateX(0); }
+.hero-nav-link:nth-child(2) { transform: translateX(14px); }
+.hero-nav-link:nth-child(3) { transform: translateX(22px); }
+.hero-nav-link:nth-child(4) { transform: translateX(14px); }
+.hero-nav-link:nth-child(5) { transform: translateX(0); }
+
+.hero-nav-link:hover,
+.hero-nav-link:focus-visible,
+.hero-nav-link.is-active {
+  color: var(--navy-deep);
+}
+
+.hero-nav-link:hover,
+.hero-nav-link:focus-visible {
+  transform: translateX(30px);
+}
+
+/* ---- Portrait ---- */
+.hero-portrait {
+  display: flex;
+  justify-content: center;
+}
+
+.portrait-frame {
+  position: relative;
+  width: min(230px, 90%);
+  aspect-ratio: 3 / 4;
+  border-radius: 10px;
+  overflow: hidden;
+  background: var(--panel);
+  border: 2px solid var(--navy-deep);
+  box-shadow: 0 10px 24px rgba(10, 25, 47, 0.1);
+}
+
+.portrait-frame img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.portrait-placeholder {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  color: var(--muted);
+  padding: 20px;
+  background: var(--panel);
+}
+
+.portrait-placeholder code {
+  color: var(--navy-accent);
+}
+
+/* img displays over the placeholder automatically once it loads;
+   JS toggles a class if it fails to load */
+.portrait-frame.has-image .portrait-placeholder {
+  display: none;
+}
+
+/* ---- Name / tagline ---- */
+.hero-intro {
+  position: relative;
+  z-index: 1;
+  text-align: center;
+  margin-top: 50px;
+}
+
+.hero-eyebrow {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--navy-accent);
+  margin-bottom: 10px;
+}
+
+.hero-name {
+  font-family: var(--font-display);
+  font-size: clamp(2.4rem, 6vw, 4rem);
+  font-weight: 700;
+  color: var(--navy-deep);
+  letter-spacing: -0.01em;
+}
+
+.hero-tagline {
+  font-family: var(--font-mono);
+  font-size: 0.95rem;
+  color: var(--slate);
+  margin-top: 10px;
+}
+
+/* ---- Scroll cue ---- */
+.scroll-cue {
+  position: absolute;
+  bottom: 26px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  text-decoration: none;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.1em;
+  color: var(--muted);
+  animation: bob 2.2s ease-in-out infinite;
+}
+
+.scroll-cue svg {
+  width: 16px;
+  height: 16px;
+  fill: none;
+  stroke: var(--muted);
+  stroke-width: 2;
+}
+
+@keyframes bob {
+  0%, 100% { transform: translateX(-50%) translateY(0); }
+  50% { transform: translateX(-50%) translateY(6px); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .scroll-cue { animation: none; }
+}
+
+/* ---- Responsive hero ---- */
+@media (max-width: 860px) {
+  .hero-grid {
+    grid-template-columns: 1fr;
+    gap: 36px;
+    text-align: center;
+  }
+  .hero-nav-wrap {
+    min-height: auto;
+  }
+  .rail-svg { display: none; }
+  .pointer-arrow { display: none; }
+  .hero-nav {
+    padding-left: 0;
+    align-items: center;
+  }
+  .hero-nav-link:nth-child(n) { transform: none; }
+  .hero-nav-link:hover, .hero-nav-link:focus-visible { transform: none; }
+  .hero-portrait { order: -1; }
+}
+
 
 /* ==========================================================================
    Section Headings & Aesthetic About Box
