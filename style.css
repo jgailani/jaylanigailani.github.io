@@ -9,20 +9,12 @@
 
 body {
   font-family: Arial, sans-serif;
-  margin: 0;
-  padding: 0;
-  background-color: #ffffff;
-  color: #1b2a4a;
-  line-height: 1.6;
-  overflow-x: hidden;
-}
-
-.content-wrapper, main, footer, section {
   max-width: 900px;
-  margin-left: auto;
-  margin-right: auto;
-  padding-left: 20px;
-  padding-right: 20px;
+  margin: auto;
+  padding: 20px;
+  background-color: #ffffff; /* Clean white background */
+  color: #1b2a4a;            /* Dark navy body text */
+  line-height: 1.6;
 }
 
 /* ==========================================================================
@@ -409,89 +401,4 @@ footer {
   font-size: 0.9rem !important;
   padding: 8px 18px !important;
   margin: 0 !important;
-}
-/* ==========================================================================
-   Full Screen Width Hero Screen
-   ========================================================================== */
-.hero-screen {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  width: 100vw;
-  height: 90vh;
-  margin: 0;
-  padding: 0 5vw 0 0; /* Flush to left screen boundary */
-  border-bottom: 2px solid #0a192f;
-  box-sizing: border-box;
-}
-
-/* Dial Container pinned to absolute left edge */
-.dial-container {
-  position: relative;
-  width: 480px;
-  height: 600px;
-  display: flex;
-  align-items: center;
-  margin-left: -10px; /* Pulls pivot tight against screen edge */
-}
-
-.clock-svg {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  pointer-events: none;
-}
-
-#arrow-hand {
-  transition: transform 0.25s cubic-bezier(0.25, 1, 0.5, 1);
-  transform-origin: 0 0;
-}
-
-/* Clear links layout following arc */
-.dial-nav {
-  position: absolute;
-  left: 210px;
-  display: flex;
-  flex-direction: column;
-  gap: 32px;
-}
-
-.dial-link {
-  font-size: 1.6rem;
-  font-weight: 800;
-  color: #0a192f;
-  text-decoration: none;
-  background: transparent !important; /* Removes navy background block */
-  padding: 0 !important;
-  transition: color 0.2s ease, transform 0.2s ease;
-  display: inline-block;
-}
-
-.dial-link:hover {
-  color: #2563eb;
-  transform: translateX(10px);
-}
-
-/* Arc staggering alignment */
-.dial-link[href="#about"] { margin-left: -10px; }
-.dial-link[href="#skills"] { margin-left: 25px; }
-.dial-link[href="#experience"] { margin-left: 45px; }
-.dial-link[href="#projects"] { margin-left: 25px; }
-.dial-link[href="#contact"] { margin-left: -10px; }
-
-/* Right Portrait Placement */
-.portrait-container {
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-}
-
-.portrait-img {
-  max-width: 380px;
-  width: 100%;
-  height: auto;
-  border-radius: 16px;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
 }
