@@ -4,12 +4,88 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Jaylani Gailani | Electrical Engineering Portfolio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-  <!-- Top Navigation Bar -->
-  <nav>
+  <!-- ============================================================
+       HERO / LANDING VIEW — instrument panel clock, curved nav rail,
+       pointer that tracks whichever nav item is hovered, portrait.
+       ============================================================ -->
+  <section class="hero" id="hero">
+    <div class="hero-grid-lines" aria-hidden="true"></div>
+
+    <div class="hero-grid">
+
+      <!-- Clock instrument -->
+      <div class="hero-instrument">
+        <div class="clock" id="clock">
+          <svg class="clock-face" viewBox="0 0 200 200" aria-hidden="true">
+            <circle class="clock-ring-outer" cx="100" cy="100" r="94"></circle>
+            <circle class="clock-ring-inner" cx="100" cy="100" r="82"></circle>
+            <g id="clockTicks"></g>
+            <g id="clockNumerals"></g>
+            <line id="handHour" class="hand hand-hour" x1="100" y1="100" x2="100" y2="60"></line>
+            <line id="handMinute" class="hand hand-minute" x1="100" y1="100" x2="100" y2="40"></line>
+            <line id="handSecond" class="hand hand-second" x1="100" y1="100" x2="100" y2="30"></line>
+            <circle class="clock-hub" cx="100" cy="100" r="4"></circle>
+          </svg>
+          <div class="clock-caption">
+            <span class="clock-label">LOCAL TIME</span>
+            <span class="clock-digital" id="clockDigital">--:--:--</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Curved nav rail with hover pointer -->
+      <div class="hero-nav-wrap">
+        <svg class="rail-svg" viewBox="0 0 220 400" preserveAspectRatio="none" aria-hidden="true">
+          <path class="rail-path" d="M 10 20 C 90 20, 60 200, 130 200 C 60 200, 90 380, 10 380"></path>
+        </svg>
+        <div class="pointer-arrow" id="pointerArrow" aria-hidden="true">
+          <svg viewBox="0 0 60 24">
+            <path d="M0 12 L46 12 M32 2 L48 12 L32 22" />
+          </svg>
+        </div>
+        <nav class="hero-nav" id="heroNav">
+          <a href="#about" class="hero-nav-link">About</a>
+          <a href="#skills" class="hero-nav-link">Skills</a>
+          <a href="#experience" class="hero-nav-link">Experience</a>
+          <a href="#projects" class="hero-nav-link">Projects</a>
+          <a href="#contact" class="hero-nav-link">Contact</a>
+        </nav>
+      </div>
+
+      <!-- Self portrait -->
+      <div class="hero-portrait">
+        <div class="portrait-frame">
+          <!-- Replace src below with your own photo, e.g. "portrait.jpg" -->
+          <img src="portrait.jpg" alt="Portrait of Jaylani Gailani" id="portraitImg">
+          <div class="portrait-placeholder" id="portraitPlaceholder">
+            <span>Add<br><code>portrait.jpg</code><br>to this folder</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="hero-intro">
+      <p class="hero-eyebrow">EE · Rutgers University</p>
+      <h1 class="hero-name">Jaylani Gailani</h1>
+      <p class="hero-tagline">Power Systems · Electronics · Embedded Systems</p>
+    </div>
+
+    <a href="#about" class="scroll-cue">
+      <span>Scroll for details</span>
+      <svg viewBox="0 0 24 24"><path d="M12 4 L12 20 M5 13 L12 20 L19 13" /></svg>
+    </a>
+  </section>
+
+  <!-- Sticky mini nav, fades in once the hero scrolls out of view -->
+  <nav class="sticky-nav" id="stickyNav">
     <a href="#about">About</a>
     <a href="#skills">Skills</a>
     <a href="#experience">Experience</a>
@@ -17,12 +93,7 @@
     <a href="#contact">Contact</a>
   </nav>
 
-  <!-- Header / Intro -->
-  <header>
-    <h1>Jaylani Gailani</h1>
-    <p class="subtitle">Electrical Engineering Student | Rutgers University</p>
-    <p class="focus-areas">Power Systems • Electronics • Embedded Systems</p>
-  </header>
+  <div class="page-content">
 
   <main>
     <!-- About Me Section in Aesthetic Box -->
@@ -123,5 +194,8 @@
     </div>
   </footer>
 
+  </div><!-- /.page-content -->
+
+  <script src="script.js"></script>
 </body>
 </html>
