@@ -342,3 +342,33 @@ footer {
   color: #1e3a8a;
   margin-top: 8px;
 }
+/* ==========================================================================
+   Projects Hub Page - Box Outlines & Spacing
+   ========================================================================== */
+.project-card {
+  background: #ffffff;
+  border: 1px solid #cbd5e1; /* Subtle slate outline */
+  border-left: 5px solid #0a192f; /* Dark Navy Accent */
+  border-radius: 8px;
+  padding: 24px;
+  margin-bottom: 28px; /* Increased separation spacing between boxes */
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04); /* Light shadow depth */
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.project-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.project-card h3 {
+  color: #0a192f;
+  font-size: 1.3rem;
+  margin-bottom: 8px;
+}
+
+.project-card .project-tech {
+  margin-bottom: 12px;
+  color: #1e3a8a;
+  font-size: 0.95rem;
+}
