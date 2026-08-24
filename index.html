@@ -3,147 +3,125 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Jaylani Gailani | Embedded Systems & Engineering</title>
+  <title>Jaylani Gailani | Electrical Engineering Portfolio</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
- <!-- Full-Width Interactive Hero Screen -->
-<header class="hero-screen">
-  
-  <!-- Far Left Clock Dial -->
-  <div class="dial-container">
-    <svg class="clock-svg" viewBox="-20 0 450 600">
-      <!-- Outer Arc -->
-      <path d="M 0 30 A 300 300 0 0 1 0 570" fill="none" stroke="#0a192f" stroke-width="4" />
+  <!-- Top Navigation Bar -->
+  <nav>
+    <a href="#about">About</a>
+    <a href="#skills">Skills</a>
+    <a href="#experience">Experience</a>
+    <a href="#projects">Projects</a>
+    <a href="#contact">Contact</a>
+  </nav>
 
-      <!-- Clock Ticks -->
-      <line x1="12" y1="95" x2="28" y2="100" stroke="#0a192f" stroke-width="3" />
-      <line x1="68" y1="188" x2="82" y2="198" stroke="#0a192f" stroke-width="3" />
-      <line x1="88" y1="293" x2="104" y2="293" stroke="#0a192f" stroke-width="4" />
-      <line x1="68" y1="398" x2="82" y2="388" stroke="#0a192f" stroke-width="3" />
-      <line x1="12" y1="491" x2="28" y2="486" stroke="#0a192f" stroke-width="3" />
+  <!-- Header / Intro -->
+  <header>
+    <h1>Jaylani Gailani</h1>
+    <p class="subtitle">Electrical Engineering Student | Rutgers University</p>
+    <p class="focus-areas">Power Systems • Electronics • Embedded Systems</p>
+  </header>
 
-      <!-- Small Outer Track -->
-      <path d="M 15 45 A 285 285 0 0 1 15 555" fill="none" stroke="#94a3b8" stroke-width="1.5" stroke-dasharray="4,6" />
-
-      <!-- Rotating Clock Arrow Hand -->
-      <g id="arrow-hand" transform="translate(0, 293) rotate(0)">
-        <line x1="0" y1="0" x2="160" y2="0" stroke="#0a192f" stroke-width="4" stroke-linecap="round" />
-        <polygon points="160,-9 182,0 160,9" fill="#0a192f" />
-        <circle cx="0" cy="0" r="11" fill="#0a192f" />
-      </g>
-    </svg>
-
-    <!-- Nav Links curved along the dial -->
-    <nav class="dial-nav">
-      <a href="#about" class="dial-link" data-angle="-38">About</a>
-      <a href="#skills" class="dial-link" data-angle="-19">Skills</a>
-      <a href="#experience" class="dial-link" data-angle="0">Experience</a>
-      <a href="#projects" class="dial-link" data-angle="19">Projects</a>
-      <a href="#contact" class="dial-link" data-angle="38">Contact</a>
-    </nav>
-  </div>
-
-  <!-- Far Right Portrait -->
-  <div class="portrait-container">
-    <img src="headshot.png" alt="Jaylani Gailani Portrait" class="portrait-img">
-  </div>
-
-</header>
-
-<script>
-  const arrowHand = document.getElementById('arrow-hand');
-  const links = document.querySelectorAll('.dial-link');
-
-  links.forEach(link => {
-    link.addEventListener('mouseenter', () => {
-      const angle = link.getAttribute('data-angle');
-      arrowHand.style.transform = `translate(0, 293px) rotate(${angle}deg)`;
-    });
-  });
-
-  document.querySelector('.dial-nav').addEventListener('mouseleave', () => {
-    arrowHand.style.transform = `translate(0, 293px) rotate(0deg)`;
-  });
-</script>
-
-
-  <!-- Main Content Sections (Original Page Content Below Landing View) -->
-  <main class="content-wrapper">
-
-    <section id="about" class="about-box">
-      <h2>About Me</h2>
-      <p>
-        I am an electrical and computer engineering student focused on microcontroller systems, custom PCB layout, hardware debugging, and real-time control software.
-      </p>
+  <main>
+    <!-- About Me Section in Aesthetic Box -->
+    <section id="about">
+      <div class="about-box">
+        <h2>About Me</h2>
+        <p>
+          I am an Electrical Engineering student at Rutgers University focusing on power systems, electronics, and embedded systems. This portfolio documents my ongoing academic research, technical skills, and engineering projects as I work toward building hardware and software solutions.
+        </p>
+      </div>
     </section>
 
+    <!-- Technical Skills Section (Pulled from Resume) -->
     <section id="skills">
       <h2>Technical Skills</h2>
+      
       <div class="skills-container">
         <div class="skill-group">
-          <h3>Hardware & PCB Design</h3>
-          <p>KiCad, Circuit Design, Schematic Capture, Trace Routing, DRC Analysis, JLCPCB Fabrication</p>
+          <h3>Hardware & Lab</h3>
+          <p>Oscilloscope, Multimeter, Signal Generator, Power Supply, Breadboard Prototyping, Soldering</p>
         </div>
+
         <div class="skill-group">
-          <h3>Embedded Programming & Control</h3>
-          <p>C++, Arduino IDE, Python, ESP32-S3, Microcontrollers, I²C, UART, Serial Communication</p>
+          <h3>Microcontrollers & Interfaces</h3>
+          <p>Arduino (ATmega328P), UART, I2C, SPI, USB, ADC/DAC, Serial Communication</p>
+        </div>
+
+        <div class="skill-group">
+          <h3>Digital Logic</h3>
+          <p>Finite State Machines, TTL Logic, Flip-Flops, 555-Timer Circuits, Closed-Loop Feedback Control</p>
+        </div>
+
+        <div class="skill-group">
+          <h3>Programming & Tools</h3>
+          <p>Python (NumPy, Matplotlib, Tkinter), C / C++, MATLAB, Java</p>
         </div>
       </div>
     </section>
 
+    <!-- Experience Section -->
     <section id="experience">
       <h2>Experience</h2>
+
+      <!-- Experience 1 -->
       <div class="experience-card">
         <div class="card-header">
-          <h3>Hardware / Embedded Projects</h3>
-          <span class="badge in-progress">Active</span>
+          <h3>Undergraduate Research – Interactive Computer Architecture Web Platform</h3>
+          <span class="badge in-progress">In Progress</span>
         </div>
-        <p class="role-org">Rutgers University Engineering</p>
+        <p class="role-org">Rutgers University Department of Electrical Engineering</p>
         <ul>
-          <li>Designed and routed complete 2-layer PCB designs in KiCad.</li>
-          <li>Integrated multi-sensor arrays and power management networks for custom development platforms.</li>
+          <li>Developing interactive web applications and visual animations to teach core computer architecture concepts.</li>
+          <li>Managing project workflows via Linear, collaborating asynchronously using Discord, and using Git/GitHub for version control and repository branching.</li>
+        </ul>
+      </div>
+
+      <!-- Experience 2 -->
+      <div class="experience-card">
+        <div class="card-header">
+          <h3>Undergraduate Research – Deep Learning Literature & Survey</h3>
+          <span class="badge in-progress">In Progress</span>
+        </div>
+        <p class="role-org">Rutgers University Department of Electrical Engineering</p>
+        <ul>
+          <li>Conducting literature reviews and synthesizing complex research papers across deep learning topics.</li>
+          <li>Collaborating with a research group to draft and summarize technical analysis for upcoming research publication.</li>
+        </ul>
+      </div>
+
+      <!-- Experience 3 -->
+      <div class="experience-card">
+        <div class="card-header">
+          <h3>Engineering Externship</h3>
+          <span class="badge future">Future • Fall 2026</span>
+        </div>
+        <p class="role-org">Upcoming Fall Experience</p>
+        <ul>
+          <li>Selected for an upcoming fall externship program to gain direct industry exposure and technical application experience.</li>
         </ul>
       </div>
     </section>
 
+    <!-- Projects Section -->
     <section id="projects" class="projects-section">
-      <h2>Featured Engineering Projects</h2>
-      <p class="projects-subtext">Explore detailed documentation, hardware layouts, and design lessons.</p>
-      <br>
-      <a href="projects.html" class="projects-link-btn">Browse Projects Directory →</a>
+      <h2>Projects</h2>
+      <a href="projects.html" target="_blank" class="projects-link-btn">Projects</a>
+      <p class="projects-subtext">Click here to see what I've built</p>
     </section>
-
   </main>
 
+  <!-- Connect With Me / Footer -->
   <footer id="contact">
     <h2>Connect With Me</h2>
     <div class="contact-links">
-      <a href="mailto:jaylanigailani90@gmail.com">Email Me</a>
+      <a href="mailto:jaylanigailani90@gmail.com">jaylanigailani90@gmail.com</a>
       <a href="https://linkedin.com/in/jaylani-gailani-4642782b0" target="_blank">LinkedIn</a>
-      <a href="projects.html">Projects Directory</a>
+      <a href="Jaylani_Gailani_Resume_Electronics.pdf" download>Download Resume (PDF)</a>
     </div>
   </footer>
-
-  <!-- Dynamic Arrow Rotation Script -->
-  <script>
-    const arrowHand = document.getElementById('arrow-hand');
-    const links = document.querySelectorAll('.dial-link');
-
-    links.forEach(link => {
-      // Hover event: rotate arrow to exact link angle
-      link.addEventListener('mouseenter', () => {
-        const angle = link.getAttribute('data-angle');
-        arrowHand.style.transform = `translate(0, 300px) rotate(${angle}deg)`;
-      });
-    });
-
-    // Reset to middle position when mouse leaves the nav area
-    document.querySelector('.dial-nav').addEventListener('mouseleave', () => {
-      arrowHand.style.transform = `translate(0, 300px) rotate(0deg)`;
-    });
-  </script>
 
 </body>
 </html>
