@@ -38,7 +38,88 @@ body {
   margin: auto;
   padding: 20px;
 }
-
+/* ==========================================================================
+   Sub-page Navigation & Header
+   (projects.html, esp32-pcb.html, facetracking.html use plain <nav> and
+   <header> tags as direct children of <body> — index.html doesn't, since
+   its nav/header live inside .hero and .sticky-nav — so these rules only
+   affect the sub-pages.)
+   ========================================================================== */
+h1, h2, h3 {
+  font-family: var(--font-display);
+}
+ 
+body > nav {
+  text-align: center;
+  margin: 20px auto 35px;
+  padding: 12px 20px;
+  background-color: var(--navy-deep);
+  border-radius: 6px;
+  max-width: 900px;
+}
+ 
+body > nav a {
+  margin: 0 15px;
+  text-decoration: none;
+  font-weight: bold;
+  color: #ffffff;
+  transition: color 0.2s ease;
+}
+ 
+body > nav a:hover {
+  color: var(--cyan);
+}
+ 
+body > header {
+  text-align: center;
+  max-width: 900px;
+  margin: 0 auto 40px;
+  padding: 0 20px 20px;
+  border-bottom: 2px solid var(--navy-deep);
+}
+ 
+body > header h1 {
+  font-size: 2.4rem;
+  color: var(--navy-deep);
+  margin-bottom: 5px;
+}
+ 
+body > header .subtitle {
+  font-size: 1.1rem;
+  font-weight: bold;
+  color: var(--navy-accent);
+  margin-bottom: 4px;
+}
+ 
+body > header .focus-areas {
+  font-size: 0.95rem;
+  color: var(--muted);
+}
+ 
+body > main,
+body > footer {
+  max-width: 900px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+ 
+body > footer {
+  padding-bottom: 20px;
+}
+ 
+/* Keep anchor jumps (About, Skills, Contact, etc.) from landing
+   underneath the sticky nav on index.html */
+#about,
+#skills,
+#experience,
+#projects,
+#contact,
+#turret {
+  scroll-margin-top: 72px;
+}
+ 
 /* ==========================================================================
    Sticky utility nav (appears once the hero has scrolled out of view)
    ========================================================================== */
