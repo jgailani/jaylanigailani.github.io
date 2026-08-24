@@ -402,3 +402,84 @@ footer {
   padding: 8px 18px !important;
   margin: 0 !important;
 }
+/* ==========================================================================
+   Interactive Hero Screen & Clock Dial Navigation
+   ========================================================================== */
+html {
+  scroll-behavior: smooth; /* Enables smooth scrolling when clicking links */
+}
+
+.hero-screen {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 90vh;
+  padding: 40px 0;
+  border-bottom: 2px solid #0a192f;
+  margin-bottom: 40px;
+}
+
+/* Dial & Arrow Container */
+.dial-container {
+  position: relative;
+  width: 450px;
+  height: 500px;
+  display: flex;
+  align-items: center;
+}
+
+.clock-svg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+#arrow-hand {
+  transition: transform 0.25s cubic-bezier(0.25, 1, 0.5, 1);
+  transform-origin: 0 0;
+}
+
+/* Navigation Links Arranged along the Arc */
+.dial-nav {
+  position: absolute;
+  left: 175px;
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+
+.dial-link {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #0a192f;
+  text-decoration: none;
+  transition: color 0.2s ease, transform 0.2s ease;
+  display: inline-block;
+}
+
+.dial-link:hover {
+  color: #1e3a8a;
+  transform: translateX(8px);
+}
+
+/* Right Side Portrait Styling */
+.portrait-container {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.portrait-img {
+  max-width: 320px;
+  width: 100%;
+  height: auto;
+  border-radius: 12px;
+}
+
+.content-wrapper {
+  padding-top: 20px;
+}
