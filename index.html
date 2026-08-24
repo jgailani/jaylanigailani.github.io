@@ -8,42 +8,66 @@
 </head>
 <body>
 
-  <!-- Fullscreen Interactive Hero Screen -->
-  <header class="hero-screen">
-    
-    <!-- Left Interactive Clock Dial -->
-    <div class="dial-container">
-      <svg class="clock-svg" viewBox="0 0 400 600">
-        <!-- Arc Curve -->
-        <path d="M 0 50 A 300 300 0 0 1 0 550" fill="none" stroke="#0a192f" stroke-width="4" />
-        
-        <!-- Rotating Clock Arrow Hand -->
-        <g id="arrow-hand" transform="translate(0, 300) rotate(0)">
-          <!-- Line -->
-          <line x1="0" y1="0" x2="140" y2="0" stroke="#0a192f" stroke-width="4" stroke-linecap="round" />
-          <!-- Arrow Head -->
-          <polygon points="140,-8 160,0 140,8" fill="#0a192f" />
-          <!-- Pivot Center Dot -->
-          <circle cx="0" cy="0" r="10" fill="#0a192f" />
-        </g>
-      </svg>
+ <!-- Full-Width Interactive Hero Screen -->
+<header class="hero-screen">
+  
+  <!-- Far Left Clock Dial -->
+  <div class="dial-container">
+    <svg class="clock-svg" viewBox="-20 0 450 600">
+      <!-- Outer Arc -->
+      <path d="M 0 30 A 300 300 0 0 1 0 570" fill="none" stroke="#0a192f" stroke-width="4" />
 
-      <!-- Nav Links along the Dial -->
-      <nav class="dial-nav">
-        <a href="#about" class="dial-link" data-angle="-40">About</a>
-        <a href="#skills" class="dial-link" data-angle="-20">Skills</a>
-        <a href="#experience" class="dial-link" data-angle="0">Experience</a>
-        <a href="#projects" class="dial-link" data-angle="20">Projects</a>
-        <a href="#contact" class="dial-link" data-angle="40">Contact</a>
-      </nav>
-    </div>
+      <!-- Clock Ticks -->
+      <line x1="12" y1="95" x2="28" y2="100" stroke="#0a192f" stroke-width="3" />
+      <line x1="68" y1="188" x2="82" y2="198" stroke="#0a192f" stroke-width="3" />
+      <line x1="88" y1="293" x2="104" y2="293" stroke="#0a192f" stroke-width="4" />
+      <line x1="68" y1="398" x2="82" y2="388" stroke="#0a192f" stroke-width="3" />
+      <line x1="12" y1="491" x2="28" y2="486" stroke="#0a192f" stroke-width="3" />
 
-    <!-- Right Portrait Section -->
-    <div class="portrait-container">
-      <img src="headshot.png" alt="Jaylani Gailani Portrait" class="portrait-img">
-    </div>
+      <!-- Small Outer Track -->
+      <path d="M 15 45 A 285 285 0 0 1 15 555" fill="none" stroke="#94a3b8" stroke-width="1.5" stroke-dasharray="4,6" />
 
-  </header>
+      <!-- Rotating Clock Arrow Hand -->
+      <g id="arrow-hand" transform="translate(0, 293) rotate(0)">
+        <line x1="0" y1="0" x2="160" y2="0" stroke="#0a192f" stroke-width="4" stroke-linecap="round" />
+        <polygon points="160,-9 182,0 160,9" fill="#0a192f" />
+        <circle cx="0" cy="0" r="11" fill="#0a192f" />
+      </g>
+    </svg>
+
+    <!-- Nav Links curved along the dial -->
+    <nav class="dial-nav">
+      <a href="#about" class="dial-link" data-angle="-38">About</a>
+      <a href="#skills" class="dial-link" data-angle="-19">Skills</a>
+      <a href="#experience" class="dial-link" data-angle="0">Experience</a>
+      <a href="#projects" class="dial-link" data-angle="19">Projects</a>
+      <a href="#contact" class="dial-link" data-angle="38">Contact</a>
+    </nav>
+  </div>
+
+  <!-- Far Right Portrait -->
+  <div class="portrait-container">
+    <img src="headshot.png" alt="Jaylani Gailani Portrait" class="portrait-img">
+  </div>
+
+</header>
+
+<script>
+  const arrowHand = document.getElementById('arrow-hand');
+  const links = document.querySelectorAll('.dial-link');
+
+  links.forEach(link => {
+    link.addEventListener('mouseenter', () => {
+      const angle = link.getAttribute('data-angle');
+      arrowHand.style.transform = `translate(0, 293px) rotate(${angle}deg)`;
+    });
+  });
+
+  document.querySelector('.dial-nav').addEventListener('mouseleave', () => {
+    arrowHand.style.transform = `translate(0, 293px) rotate(0deg)`;
+  });
+</script>
+
 
   <!-- Main Content Sections (Original Page Content Below Landing View) -->
   <main class="content-wrapper">
