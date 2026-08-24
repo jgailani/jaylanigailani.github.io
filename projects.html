@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Jaylani Gailani | Projects</title>
+  <title>Jaylani Gailani | Projects Directory</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -17,55 +17,65 @@
 
   <header>
     <h1>Engineering Projects</h1>
-    <p class="subtitle">Explore my hardware, embedded systems, and software projects below.</p>
+    <p class="subtitle">Explore my hardware, embedded systems, and software designs.</p>
   </header>
 
   <main>
-    <section>
+    <section class="projects-list">
       
-      <!-- Project Card 1: Face-Tracking Camera Turret -->
-      <div class="project-card">
-        <h3>Face-Tracking Camera Turret</h3>
+      <!-- Project Card 1: ESP32 PCB -->
+      <article class="project-card">
+        <div class="card-top">
+          <h3>Custom ESP32 Sensor Hub PCB</h3>
+          <span class="badge completed">Completed</span>
+        </div>
+        <p class="project-tech"><strong>Tools:</strong> KiCad, ESP32-S3, BME280, MPU6050, USB-C, I²C, 2-Layer PCB</p>
+        <p class="card-desc">
+          Designed and routed a custom 2-layer ESP32-S3 sensor hub integrating environmental/motion sensing, regulated power distribution, and a dedicated bottom ground plane.
+        </p>
+        <div class="card-footer">
+          <a href="esp32-pcb.html" class="projects-link-btn card-btn">View Full Project →</a>
+        </div>
+      </article>
+
+      <!-- Project Card 2: Face-Tracking Turret -->
+      <article class="project-card">
+        <div class="card-top">
+          <h3>Face-Tracking Camera Turret</h3>
+          <span class="badge completed">Completed</span>
+        </div>
         <p class="project-tech"><strong>Tools:</strong> Python, OpenCV, Arduino (C++), 3D Printing, Serial Communication</p>
-        <p>
+        <p class="card-desc">
           A 2-axis (pan-tilt) camera turret that tracks human faces in real time using a closed-loop control system split between a PC and an Arduino microcontroller.
         </p>
-        <br>
-        <a href="facetracking.html" class="projects-link-btn" style="font-size: 0.95rem; padding: 8px 16px;">View Full Project →</a>
-      </div>
+        <div class="card-footer">
+          <a href="facetracking.html" class="projects-link-btn card-btn">View Full Project →</a>
+        </div>
+      </article>
 
-      <!-- Project Card 2: Constant Current Supply (From your resume) -->
-      <div class="project-card">
-        <h3>Programmable Constant Current Supply</h3>
+      <!-- Project Card 3: Constant Current Supply -->
+      <article class="project-card">
+        <div class="card-top">
+          <h3>Programmable Constant Current Supply</h3>
+          <span class="badge in-progress">In Progress</span>
+        </div>
         <p class="project-tech"><strong>Tools:</strong> Arduino, Python, I2C, UART, Circuit Prototyping</p>
-        <p>
+        <p class="card-desc">
           Closed-loop current regulation system with automated Python data logging and real-time hardware validation across LED and resistive loads.
         </p>
-        <br>
-        <span class="badge in-progress">Documentation Coming Soon</span>
-      </div>
+      </article>
 
-      <!-- Project Card 3: Traffic Signal Controller (From your resume) -->
-      <div class="project-card">
-        <h3>Traffic Signal Controller FSM</h3>
+      <!-- Project Card 4: Traffic Signal Controller -->
+      <article class="project-card">
+        <div class="card-top">
+          <h3>Traffic Signal Controller FSM</h3>
+          <span class="badge in-progress">In Progress</span>
+        </div>
         <p class="project-tech"><strong>Tools:</strong> TTL Logic, 555-Timers, Oscilloscope, Flip-Flops</p>
-        <p>
+        <p class="card-desc">
           Demand-driven Finite State Machine controller built entirely on physical hardware with hardware clock generation and timing analysis.
         </p>
-        <br>
-        <span class="badge in-progress">Documentation Coming Soon</span>
-      </div>
-      <!-- Project Card: ESP32 Sensor Hub PCB -->
-<div class="project-card">
-  <h3>Custom ESP32 Sensor Hub PCB</h3>
-  <p class="project-tech"><strong>Tools:</strong> KiCad, ESP32-S3, BME280, MPU6050, USB-C, I²C, 2-Layer PCB</p>
-  <p>
-    Designed and routed a custom 2-layer ESP32-S3 sensor hub integrating environmental/motion sensing, regulated power distribution, and a dedicated bottom ground plane.
-  </p>
-  <br>
-  <a href="esp32-pcb.html" class="projects-link-btn" style="font-size: 0.95rem; padding: 8px 16px;">View Full Project →</a>
-</div>
-
+      </article>
 
     </section>
   </main>
