@@ -1,1 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Power Flow & Short-Circuit Analysis | Jaylani Gailani</title>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
 
+  <!-- Top Navigation Bar -->
+  <nav>
+    <a href="projects.html">← Back to Projects</a>
+    <a href="index.html">Main Portfolio</a>
+    <a href="#contact">Contact</a>
+  </nav>
+
+  <header>
+    <h1>Power Flow & Short-Circuit Analysis</h1>
+    <p class="subtitle">13.8 kV / 480 V Commercial &amp; Industrial Distribution System — PowerWorld Simulator</p>
+  </header>
+
+  <main>
+    <article class="project-detail-card">
+      <div class="project-header">
+        <h2>Project Overview</h2>
+        <span class="badge completed">Completed</span>
+      </div>
+
+      <p class="project-tags">
+        <strong>Tools & Standards:</strong> PowerWorld Simulator, Newton-Raphson Load Flow, Symmetrical Components Fault Analysis, ANSI C84.1, IEEE 141, IEEE 242
+      </p>
+
+      <p class="project-summary">
+        I modeled a 13.8 kV to 480 V commercial/industrial distribution network in PowerWorld to get hands-on with load flow, overload behavior, and short-circuit analysis instead of just reading about them. I built the one-line from scratch, ran a baseline load flow, then pushed one of the panels well past its rated load on purpose to watch the transformer and bus voltages fail. From there I fixed it the way a utility engineer actually would — upsizing the transformer, adjusting the LTC tap, and adding local VAR support — and finished by running a bolted 3-phase fault to size the breakers.
+      </p>
+
+      <h3>System Setup</h3>
+      <p class="project-summary">
+        The network steps down from a 13.8 kV utility interconnect through a delta-wye main transformer into a 480 V main switchboard, which feeds three radial panels: Panel A (lighting/receptacles, 142.5 kW / 46.8 kVAR), Panel B (industrial motors, 191 kW / 118 kVAR), and Panel C (HVAC, 220 kW / 119 kVAR). I picked those three loads specifically because they each behave differently under a fault or overload — Panel B's motor load has the worst power factor of the three, which is exactly why I later stressed that panel.
+      </p>
+
+      <div class="image-gallery">
+        <div class="img-container">
+          <img src="First%20Diagram.png" alt="Initial network topology in PowerWorld">
+          <p class="img-caption">1. Initial topology laid out in PowerWorld</p>
+        </div>
+        <div class="img-container">
+          <img src="baseLine%20One%20line%20Diagram.png" alt="Baseline one-line diagram">
+          <p class="img-caption">2. Fully configured baseline one-line diagram</p>
+        </div>
+      </div>
+
+      <h3>Baseline Load Flow</h3>
+      <p class="project-summary">
+        With everything solved under normal operating conditions, the system pulled about 0.553 MW and 0.284 Mvar total, and every bus sat right around 0.9998 p.u. — basically flat, which is what you want to see for a healthy baseline before you start breaking things on purpose.
+      </p>
+
+      <div class="image-gallery">
+        <div class="img-container">
+          <img src="Baseline%20Bus%20Voltage%20Table.png" alt="Baseline bus voltage table">
+          <p class="img-caption">3. Bus voltage table under normal load</p>
+        </div>
+      </div>
+
+      <ul class="project-bullets">
+        <li><strong>Main SWBD voltage:</strong> 0.9998 p.u. (479.9 V)</li>
+        <li><strong>Total active load:</strong> 0.553 MW</li>
+        <li><strong>Total reactive load:</strong> 0.284 Mvar</li>
+        <li><strong>All three panels</strong> held steady at 0.9998 p.u. with no losses of note</li>
+      </ul>
+
+      <h3>Stress Test: Overloading Panel B</h3>
+      <p class="project-summary">
+        To see what actual failure looks like in PowerWorld rather than on paper, I bumped Panel B's demand up to 3.5 MW / 2.1 Mvar — way beyond what the transformer was rated for. The 1.0 MVA step-down transformer ended up running at 449% of its nameplate capacity, and the heavy reactive current draw dragged every downstream bus below the 0.95 p.u. ANSI C84.1 floor.
+      </p>
+
+      <div class="image-gallery">
+        <div class="img-container">
+          <img src="Overload%20Canvas.png" alt="PowerWorld canvas showing transformer overload warning">
+          <p class="img-caption">4. 449% transformer overload flagged on the canvas</p>
+        </div>
+        <div class="img-container">
+          <img src="Low%20Voltage%20Bus%20Table.png" alt="Bus voltage table during overload">
+          <p class="img-caption">5. Bus voltages collapsing under the overload</p>
+        </div>
+      </div>
+
+      <div class="callout-box">
+        <ul class="project-bullets">
+          <li><strong>Why it failed thermally:</strong> A 1.0 MVA transformer just can't carry a load that needs 4.49 MVA — it wasn't a marginal overload, it was almost 4.5x rated capacity, which in a real system means relay tripping or worse before it ever gets that far.</li>
+          <li><strong>Why voltage collapsed alongside it:</strong> Panel B's load is heavily inductive, so pushing that much reactive current through the upstream impedance caused the voltage drop to compound — it wasn't just the transformer struggling, the whole feeder was starved for VARs.</li>
+        </ul>
+      </div>
+
+      <h3>Fixing It: Transformer Upgrade & Reactive Compensation</h3>
+      <p class="project-summary">
+        Rather than just rolling back the load to make the problem disappear, I fixed it the way I'd actually want to justify to someone reviewing the design. I resized the transformer to 5.0 MVA and set the LTC tap to +2.5% (1.025 p.u.) to give the secondary side a voltage boost, then added a 2.0 Mvar switched capacitor bank directly at Panel B so the reactive power didn't have to travel all the way from the utility source anymore.
+      </p>
+
+      <div class="image-gallery">
+        <div class="img-container">
+          <img src="Mltigated%20One%20Line%20Diagram.png" alt="Mitigated one-line diagram with capacitor bank">
+          <p class="img-caption">6. Mitigated network with local VAR support</p>
+        </div>
+        <div class="img-container">
+          <img src="Mitigated%20Bus%20Voltage%20Table.png" alt="Bus voltage table after mitigation">
+          <p class="img-caption">7. Bus voltages restored after mitigation</p>
+        </div>
+      </div>
+
+      <ul class="project-bullets">
+        <li>Transformer loading dropped back into a safe operating range, well under 80% of the new 5.0 MVA rating</li>
+        <li>Every downstream panel voltage recovered to roughly 0.99 p.u.</li>
+        <li>All PowerWorld system warnings cleared after re-solving the load flow</li>
+      </ul>
+
+      <h3>Short-Circuit Fault Analysis</h3>
+      <p class="project-summary">
+        Once the system was stable again, I still needed real fault current numbers to actually spec the breakers — a healthy load flow doesn't tell you anything about what happens during a fault. I applied a bolted 3-phase symmetrical fault (Zf = 0) directly at Panel B's bus.
+      </p>
+
+      <div class="image-gallery">
+        <div class="img-container">
+          <img src="Fault%20Analysis.png" alt="3-phase short circuit fault analysis in PowerWorld">
+          <p class="img-caption">8. Fault analysis calculation window in PowerWorld</p>
+        </div>
+      </div>
+
+      <ul class="project-bullets">
+        <li><strong>Fault type:</strong> 3-phase balanced bolted fault (R = 0, X = 0)</li>
+        <li><strong>Faulted bus voltage:</strong> 0.0000 p.u. — full voltage collapse at the fault point, as expected</li>
+        <li><strong>Subtransient fault current:</strong> ≈ 1.15 kA RMS</li>
+      </ul>
+
+      <h3>What This Told Me</h3>
+      <div class="callout-box">
+        <ul class="project-bullets">
+          <li><strong>Sizing matters more than it looks on paper:</strong> A transformer that's fine for today's load can fail badly the moment a facility adds motor load without anyone re-checking the math — 449% overload isn't a rounding error, it's a completely undersized system.</li>
+          <li><strong>Reactive power should be fixed locally, not upstream:</strong> Adding the capacitor bank right at Panel B did more for voltage stability than the tap change alone — it stopped the inductive current from ever having to travel through the feeder in the first place.</li>
+          <li><strong>Breaker selection has to be based on fault current, not load current:</strong> Based on the ≈1.15 kA subtransient fault current, I'd spec MCCBs or power circuit breakers rated at least 10 kA AIC so there's real margin for downstream protective coordination.</li>
+        </ul>
+      </div>
+    </article>
+  </main>
+
+  <footer id="contact">
+    <p>
+      <a href="projects.html">Projects Directory</a> | 
+      <a href="index.html">Main Portfolio</a> | 
+      <a href="mailto:jaylanigailani90@gmail.com">Email Me</a>
+    </p>
+  </footer>
+
+</body>
+</html>
