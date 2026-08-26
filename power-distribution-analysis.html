@@ -73,7 +73,7 @@
 
       <h3>Stress Test: Overloading Panel B</h3>
       <p class="project-summary">
-        To see what actual failure looks like in PowerWorld rather than on paper, I bumped Panel B's demand up to 3.5 MW / 2.1 Mvar — way beyond what the transformer was rated for. The 1.0 MVA step-down transformer ended up running at 449% of its nameplate capacity, and the heavy reactive current draw dragged every downstream bus below the 0.95 p.u. ANSI C84.1 floor.
+        To see what actual failure looks like in PowerWorld rather than on paper, I bumped Panel B's demand up to 3.5 MW / 2.1 Mvar — way beyond what the transformer was rated for. The 1.0 MVA step-down transformer ended up running at 449% of its nameplate capacity. Bus voltages dipped in response too — Main SWBD fell to 0.9985 p.u. and Panel B to 0.9977 p.u. — a modest sag on its own, but paired with a transformer running at 4.5x its rated capacity it's a system that's failing thermally well before voltage would ever be the limiting factor.
       </p>
 
       <div class="image-gallery">
@@ -90,7 +90,7 @@
       <div class="callout-box">
         <ul class="project-bullets">
           <li><strong>Why it failed thermally:</strong> A 1.0 MVA transformer just can't carry a load that needs 4.49 MVA — it wasn't a marginal overload, it was almost 4.5x rated capacity, which in a real system means relay tripping or worse before it ever gets that far.</li>
-          <li><strong>Why voltage collapsed alongside it:</strong> Panel B's load is heavily inductive, so pushing that much reactive current through the upstream impedance caused the voltage drop to compound — it wasn't just the transformer struggling, the whole feeder was starved for VARs.</li>
+          <li><strong>Why the voltage sag was still a warning sign:</strong> The bus voltages only dropped a few tenths of a percent in this model, but that's misleading on its own — a transformer already at 449% loading would trip on thermal/overcurrent protection long before voltage became the binding constraint in a real installation.</li>
         </ul>
       </div>
 
@@ -112,7 +112,7 @@
 
       <ul class="project-bullets">
         <li>Transformer loading dropped back into a safe operating range, well under 80% of the new 5.0 MVA rating</li>
-        <li>Every downstream panel voltage recovered to roughly 0.99 p.u.</li>
+        <li>Downstream panel voltages settled around 0.975 p.u. (Main SWBD 0.9752, Panel A 0.9752, Panel B 0.9748, Panel C 0.9751)</li>
         <li>All PowerWorld system warnings cleared after re-solving the load flow</li>
       </ul>
 
@@ -131,7 +131,7 @@
       <ul class="project-bullets">
         <li><strong>Fault type:</strong> 3-phase balanced bolted fault (R = 0, X = 0)</li>
         <li><strong>Faulted bus voltage:</strong> 0.0000 p.u. — full voltage collapse at the fault point, as expected</li>
-        <li><strong>Subtransient fault current:</strong> ≈ 1.15 kA RMS</li>
+        <li><strong>Subtransient fault current:</strong> ≈114.5 kA RMS per phase (114,500 A on Phase A, 114,498 A on Phases B and C)</li>
       </ul>
 
       <h3>What This Told Me</h3>
@@ -139,7 +139,7 @@
         <ul class="project-bullets">
           <li><strong>Sizing matters more than it looks on paper:</strong> A transformer that's fine for today's load can fail badly the moment a facility adds motor load without anyone re-checking the math — 449% overload isn't a rounding error, it's a completely undersized system.</li>
           <li><strong>Reactive power should be fixed locally, not upstream:</strong> Adding the capacitor bank right at Panel B did more for voltage stability than the tap change alone — it stopped the inductive current from ever having to travel through the feeder in the first place.</li>
-          <li><strong>Breaker selection has to be based on fault current, not load current:</strong> Based on the ≈1.15 kA subtransient fault current, I'd spec MCCBs or power circuit breakers rated at least 10 kA AIC so there's real margin for downstream protective coordination.</li>
+          <li><strong>Breaker selection has to be based on fault current, not load current:</strong> A ≈114.5 kA subtransient fault current is a lot higher than I expected going in — it means the panel needs breakers rated well above the typical 10 kA AIC range, closer to 125 kA AIC, to safely clear a bolted fault at that bus.</li>
         </ul>
       </div>
     </article>
