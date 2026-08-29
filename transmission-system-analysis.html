@@ -1,1 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>12-Bus Transmission & Distribution Analysis | Jaylani Gailani</title>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
 
+  <!-- Top Navigation Bar -->
+  <nav>
+    <a href="projects.html">← Back to Projects</a>
+    <a href="index.html">Main Portfolio</a>
+    <a href="#contact">Contact</a>
+  </nav>
+
+  <header>
+    <h1>12-Bus Transmission & Distribution Analysis</h1>
+    <p class="subtitle">Peak Demand Stress Testing & N-1 Contingency Reliability in PowerWorld</p>
+  </header>
+
+  <main>
+    <article class="project-detail-card">
+      <div class="project-header">
+        <h2>Project Overview</h2>
+        <span class="badge completed">Completed</span>
+      </div>
+
+      <p class="project-tags">
+        <strong>Tools & Standards:</strong> PowerWorld Simulator, Newton-Raphson Full Solver (RECTNEWTON), PowerWorld Auxiliary (.aux) Scripting, N-1 Contingency Analysis, NERC Reliability Criteria
+      </p>
+
+      <p class="project-summary">
+        This one's a step up in scale from my single-substation work — a full 12-bus transmission and sub-transmission network, stepping a 230 kV backbone down to a 115 kV regional system. I wanted to move past steady-state load flow and actually test how the grid behaves under peak demand stress and under an N-1 contingency, which is the standard reliability bar utilities have to design against: the system has to survive losing any single major element without cascading.
+      </p>
+
+      <h3>Baseline Setup</h3>
+      <p class="project-summary">
+        I built the 12-bus model with a 230 kV high-voltage backbone feeding a 115 kV sub-transmission layer, solved with PowerWorld's Newton-Raphson full exact solver. Under normal conditions, total system load across buses 7–12 came out to roughly 285 MW, with every bus holding voltage at or above the 0.95 p.u. stability floor and comfortable capacity margin on every line.
+      </p>
+
+      <div class="image-gallery">
+        <div class="img-container">
+          <img src="01_Clean_Baseline.PNG" alt="Baseline 12-bus power flow solution">
+          <p class="img-caption">1. Baseline solved power flow — all lines well under 80% loading</p>
+        </div>
+      </div>
+
+      <h3>Peak Demand Stress Test</h3>
+      <p class="project-summary">
+        Instead of manually editing loads one at a time, I automated a 24-hour peak demand scaling run using PowerWorld's auxiliary (.aux) scripting, applying a 1.15x multiplier across every load center. That pushed total system demand from ~285 MW to ~328 MW — Bus 11 alone went from 60 MW to 69 MW. That 15% surge was enough to expose real thermal bottlenecks on the 115 kV corridors feeding local load centers, with two lines hitting 111% and 103% of their rated MVA capacity.
+      </p>
+
+      <div class="image-gallery">
+        <div class="img-container">
+          <img src="02_Peak_Demand_Overload.png" alt="Peak demand overload with 111% and 103% line loading warnings">
+          <p class="img-caption">2. Peak demand surge — 111% and 103% thermal overloads on 115 kV lines</p>
+        </div>
+        <div class="img-container">
+          <img src="OverLoad_Baseline.PNG" alt="Full network view during peak demand overload">
+          <p class="img-caption">3. Full-network view of the same overload condition</p>
+        </div>
+      </div>
+
+      <h3>Diagnosing the Bottleneck & Fixing It</h3>
+      <p class="project-summary">
+        My first instinct was to fix this operationally — re-dispatching active power across Generators 1, 2, and 4 to route around the constrained corridors. That didn't work, and it made sense once I thought about it: the bottleneck was local. No amount of shifting generation upstream changes the fact that a specific 115 kV segment physically can't carry that much current into that load pocket. The actual fix had to be a capacity upgrade — I raised the continuous MVA thermal ratings (Limit Set A) on the constrained line segments, effectively modeling a conductor upgrade (like moving to higher-ampacity ACSR). That brought every branch back under 100% loading.
+      </p>
+
+      <div class="image-gallery">
+        <div class="img-container">
+          <img src="03_Peak_Demand_Upgraded.png" alt="Peak demand case after thermal rating upgrade, overloads cleared">
+          <p class="img-caption">4. Same peak demand case after the thermal rating upgrade — overloads cleared</p>
+        </div>
+      </div>
+
+      <h3>N-1 Contingency Check</h3>
+      <p class="project-summary">
+        Once the peak-demand case was stable, I still needed to check the reliability side: what happens if the grid loses a major element unexpectedly? I tripped the main 230 kV backbone tie-line — the primary connection from the generation source into the rest of the network — and re-solved the power flow to see how the remaining paths absorbed the redirected power.
+      </p>
+
+      <div class="image-gallery">
+        <div class="img-container">
+          <img src="04_N1_Contingency_Outage.png" alt="N-1 contingency with 230kV backbone tripped, power rerouted through secondary paths">
+          <p class="img-caption">5. 230 kV backbone tripped — power reroutes through secondary 115 kV paths</p>
+        </div>
+      </div>
+
+      <ul class="project-bullets">
+        <li>Remaining transmission paths absorbed the full shifted power transfer with no cascading overloads</li>
+        <li>Maximum line loading across the network stayed capped between 82% and 95%</li>
+        <li>System held stable voltage and thermal margins throughout the outage — a passing N-1 result</li>
+      </ul>
+
+      <h3>What I Ran Into</h3>
+      <div class="callout-box">
+        <ul class="project-bullets">
+          <li><strong>SimAuto COM automation kept failing:</strong> I originally tried to drive the peak-demand scaling with a Python script over PowerWorld's SimAuto COM interface, but kept hitting a <code>pywintypes.com_error: Invalid class string</code> because the COM object wasn't registered/licensed on my machine. I dropped the Python approach entirely and switched to native PowerWorld .aux auxiliary script blocks loaded directly through File → Load Auxiliary — more reliable and it's what PowerWorld actually expects.</li>
+          <li><strong>The .aux scripts wouldn't parse cleanly at first:</strong> PowerWorld's script parser is strict about DATA/SCRIPT block headers and file encoding. I had to standardize on plain ASCII output (<code>Out-File -Encoding ascii</code> in PowerShell) and get the block headers exactly right before it would load without errors.</li>
+          <li><strong>Canvas labels lied to me for a bit:</strong> After running the load multiplier, some on-screen labels still showed 60 MW even though the solver had already updated Bus 11 to 69 MW — turned out those were static text objects, not fields bound to the live database. I stopped trusting the canvas text and started verifying actual values through the Load Information Dialog instead.</li>
+          <li><strong>Re-dispatch doesn't fix a local thermal problem:</strong> Shifting MW setpoints across Generators 1, 2, and 4 didn't touch the 115 kV overloads because the constraint was branch impedance and local current draw, not generation mix — a good reminder that operational fixes and physical asset upgrades solve different classes of problems.</li>
+        </ul>
+      </div>
+
+      <h3>Key Takeaways</h3>
+      <div class="callout-box">
+        <ul class="project-bullets">
+          <li><strong>Baseline stable ≠ peak-ready:</strong> The network was fully healthy at ~285 MW baseline, but a realistic 15% peak surge alone was enough to overload two 115 kV corridors — a reminder that steady-state checks alone don't tell you much about how a system holds up during real demand swings.</li>
+          <li><strong>Local bottlenecks need local fixes:</strong> Generation re-dispatch is a system-wide tool; it can't solve a problem caused by one physical conductor being undersized for the load it's actually carrying.</li>
+          <li><strong>The network meets N-1 criteria:</strong> Losing the primary 230 kV backbone tie-line didn't cascade — remaining paths picked up the load with loadings topping out at 95%, which is the kind of margin NERC's N-1 standard is designed to require.</li>
+        </ul>
+      </div>
+    </article>
+  </main>
+
+  <footer id="contact">
+    <p>
+      <a href="projects.html">Projects Directory</a> | 
+      <a href="index.html">Main Portfolio</a> | 
+      <a href="mailto:jaylanigailani90@gmail.com">Email Me</a>
+    </p>
+  </footer>
+
+</body>
+</html>
