@@ -1,1 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dementia Assist — Object Location Memory System | Jaylani Gailani</title>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
 
+  <!-- Top Navigation Bar -->
+  <nav>
+    <a href="projects.html">← Back to Projects</a>
+    <a href="index.html">Main Portfolio</a>
+    <a href="#contact">Contact</a>
+  </nav>
+
+  <header>
+    <h1>Dementia Assist — Object Location Memory System</h1>
+    <p class="subtitle">ESP32-CAM Object Tracking, Memory Logging & Spoken Query Proof-of-Concept</p>
+  </header>
+
+  <main>
+    <article class="project-detail-card">
+      <div class="project-header">
+        <h2>Project Overview</h2>
+        <span class="badge in-progress">In Progress</span>
+      </div>
+
+      <p class="project-tags">
+        <strong>Tools & Components:</strong> ESP32-CAM (AI-Thinker), Python, YOLOv8-nano, OpenCV, pyttsx3, Arduino IDE, TP4056 Li-Po Charging Module, 3D-Printed Mount
+      </p>
+
+      <p class="project-summary">
+        This one started as a friend's idea: people with dementia often can't remember where they last set down a phone, cup, or remote — what if a camera could just remember for them? I built the software foundation for that system as a proof-of-concept before touching any wearable hardware. The long-term vision is camera glasses that quietly watch what you set down and can answer "where's my phone?" on request, but I deliberately proved the detection-and-memory logic first on a stationary setup, since that's the part that actually had to work before a wearable form factor mattered at all.
+      </p>
+
+      <h3>How It Works</h3>
+      <p class="project-summary">
+        The system runs as four parts in sequence: an ESP32-CAM streams live video over WiFi, a laptop running YOLOv8-nano detects objects of interest in each frame, custom Python logic tracks each object and saves a snapshot the moment it disappears from view, and a terminal query tool answers "where's my ___?" with that saved photo, a timestamp, and a spoken response — fully offline, no cloud or internet dependency anywhere in the pipeline.
+      </p>
+
+      <!-- Video Demo — paste your YouTube embed link on the line below,
+           replacing YOUR_VIDEO_ID_HERE in the src attribute -->
+      <div class="video-container">
+        <h3>Project Demonstration</h3>
+        <div class="responsive-video">
+          <iframe
+            width="100%"
+            height="400"
+            src="https://www.youtube.com/embed/DgERcuPiFng"
+            title="Dementia Assist — Object Location Memory System Demo"
+            frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowfullscreen>
+          </iframe>
+        </div>
+      </div>
+
+      <h3>The Glasses Prototype</h3>
+      <p class="project-summary">
+        The current hardware is a rough, hook-on mechanism that clips onto an existing pair of glasses — not a finished wearable design. The goal at this stage was purely to prove that the mounting concept was physically reasonable before investing in a proper enclosure. The camera, battery, and charging circuit are all still running on the desk-mounted setup shown in the demo video above; the clip-on piece exists to validate the idea, not to be the final form factor.
+      </p>
+
+      <div class="image-gallery">
+        <div class="img-container">
+          <img src="dementia1.jpeg" alt="Dementia Assist glasses prototype photo 1">
+          <p class="img-caption">1. Rough hook-on mount prototype</p>
+        </div>
+        <div class="img-container">
+          <img src="dementia2.jpeg" alt="Dementia Assist glasses prototype photo 2">
+          <p class="img-caption">2. ESP32-CAM and mount attached to glasses frame</p>
+        </div>
+        <div class="img-container">
+          <img src="dementia3.jpeg" alt="Dementia Assist glasses prototype photo 3">
+          <p class="img-caption">3. Close-up of the camera mounting mechanism</p>
+        </div>
+        <div class="img-container">
+          <img src="dementia4.jpeg" alt="Dementia Assist glasses prototype photo 4">
+          <p class="img-caption">4. Full prototype assembly</p>
+        </div>
+      </div>
+
+      <h3>System Architecture</h3>
+      <ul class="project-bullets">
+        <li><strong>Camera capture:</strong> An ESP32-CAM streams live video over WiFi as MJPEG, running fully untethered from a 3.7V 1000mAh LiPo battery through a TP4056 charging module.</li>
+        <li><strong>Object detection:</strong> A laptop running YOLOv8-nano identifies tracked objects (currently phone and cup — both native COCO dataset classes) in each incoming frame.</li>
+        <li><strong>State tracking & memory:</strong> Custom Python logic (<code>tracker.py</code>) watches each detected object and saves a snapshot plus timestamp representing its last known position, overwriting the previous snapshot as new sightings come in.</li>
+        <li><strong>Query interface:</strong> A terminal tool (<code>query.py</code>) accepts typed input like "phone" and responds with the saved photo, a human-readable timestamp, and a spoken answer via offline text-to-speech.</li>
+      </ul>
+
+      <h3>The Memory Logic — Why It Works Without Motion Tracking</h3>
+      <p class="project-summary">
+        The core design decision was avoiding the hard problem entirely. Detecting the exact moment an object is "placed down" requires judging whether it's stationary, which is genuinely difficult for a moving or head-worn camera since the background never holds still. Instead, the system continuously re-photographs each tracked object while it's visible and simply treats the last photo taken right before the object disappears from view as its last known location. This mirrors how people actually behave — your gaze tends to move away from something shortly after you set it down — so "the last frame it was seen in" naturally lands near the moment of placement without any motion analysis at all.
+      </p>
+
+      <ul class="project-bullets">
+        <li>If the object is detected in the current frame, its "last seen" time updates; a new snapshot is only saved (overwriting the old one) once 5+ seconds have passed since the last save.</li>
+        <li>If the object isn't detected, nothing happens immediately — that avoids false triggers from something like a hand briefly covering it. Only after a full second of continuous non-detection is the object considered "gone," and the last saved snapshot becomes the standing answer.</li>
+        <li>When the object reappears, the cycle just restarts and old data gets naturally overwritten with fresh sightings.</li>
+      </ul>
+
+      <h3>Scope Decisions</h3>
+      <p class="project-summary">
+        A few things were left out on purpose, not overlooked. There's no room or location labeling — the snapshot photo itself is the location, which is simpler to build and honestly more useful to an end user than an abstract room name would be. There's no GPS, since it doesn't work reliably indoors, which is the environment this actually needs to function in. And queries are typed rather than spoken for now; voice output through TTS is already working, but voice input is next on the list rather than part of this proof-of-concept.
+      </p>
+
+      <h3>Real Engineering Challenges</h3>
+      <div class="callout-box">
+        <ul class="project-bullets">
+          <li><strong>ESP32-CAM flashing issues:</strong> Got a "camera detected but not compatible" error that turned out to be the wrong camera model selected in <code>board_config.h</code> — fixed by correctly selecting AI-Thinker within Espressif's ESP32 board package, along with getting the GPIO0-to-GND jumper procedure right (grounded during upload, removed for normal operation).</li>
+          <li><strong>Driver headaches on a fresh machine:</strong> The CP2102 USB-to-TTL adapter needed the Silicon Labs CP210x VCP driver installed manually through Device Manager, since the newer driver package didn't ship with a one-click installer anymore.</li>
+          <li><strong>Streaming lag while on battery power:</strong> I ruled out WiFi signal strength and resolution/quality settings one at a time before landing on the real cause — Python was falling progressively behind the incoming stream. The fix was architectural: read the MJPEG stream continuously in a background thread and always serve only the newest frame to the detection loop, instead of processing every frame in order.</li>
+          <li><strong>Battery connector mismatch:</strong> The LiPo battery's Micro JST 1.25mm connector didn't match the TP4056 module's bare solder pads, so I cut off the JST plug and soldered the battery leads directly to the board.</li>
+        </ul>
+      </div>
+
+      <h3>Current Status & What's Next</h3>
+      <ul class="project-bullets">
+        <li>ESP32-CAM flashed and streaming reliably over WiFi, fully untethered on battery power</li>
+        <li>YOLOv8-nano detection running live on the camera's stream</li>
+        <li>State tracker correctly saving and overwriting snapshots based on object presence/absence</li>
+        <li>Query interface successfully retrieving the right snapshot, timestamp, and spoken answer</li>
+        <li>Full end-to-end test passed: phone placed in view → detected → snapshot saved → phone moved out of view → query returns the correct last-known snapshot and timestamp</li>
+      </ul>
+
+      <div class="callout-box">
+        <p class="project-summary" style="margin-bottom: 0;">
+          The core software logic is proven — that was the whole point of this phase. The next step is hardware: designing a real 3D-printed housing to mount the ESP32-CAM, battery, and charging circuit near eye level for the actual wearable glasses form factor, rather than the rough hook-on clip this prototype currently uses.
+        </p>
+      </div>
+    </article>
+  </main>
+
+  <footer id="contact">
+    <p>
+      <a href="projects.html">Projects Directory</a> | 
+      <a href="index.html">Main Portfolio</a> | 
+      <a href="mailto:jaylanigailani90@gmail.com">Email Me</a>
+    </p>
+  </footer>
+
+</body>
+</html>
