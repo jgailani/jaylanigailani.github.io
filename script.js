@@ -1,5 +1,6 @@
 /* ==========================================================================
-   Hero instrument panel: analog clock + hover pointer + sticky nav
+   Hero instrument panel: analog clock + hover pointer + floating photo
+   collage fallback + sticky nav
    ========================================================================== */
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -7,6 +8,7 @@ document.addEventListener('DOMContentLoaded', () => {
   startClock();
   setupPointer();
   setupPortraitFallback();
+  setupGalleryFallback();
   setupStickyNav();
 });
 
@@ -134,6 +136,29 @@ function setupPortraitFallback() {
   if (img.complete && img.naturalWidth > 0) {
     frame.classList.add('has-image');
   }
+}
+
+/* ---- Gallery photos: any tile without a matching uploaded file just
+   hides itself instead of showing a broken image icon ---- */
+function setupGalleryFallback() {
+  const galleryImgs = document.querySelectorAll('.gallery-frame img');
+
+  galleryImgs.forEach((img) => {
+    const tile = img.closest('.floating-photo');
+    if (!tile) return;
+
+    img.addEventListener('error', () => tile.classList.add('is-missing'));
+    img.addEventListener('load', () => tile.classList.remove('is-missing'));
+
+    // In case the image already failed/loaded before listeners attach
+    if (img.complete) {
+      if (img.naturalWidth === 0) {
+        tile.classList.add('is-missing');
+      } else {
+        tile.classList.remove('is-missing');
+      }
+    }
+  });
 }
 
 /* ---- Sticky nav fades in once the hero scrolls out of view ---- */
