@@ -13,7 +13,8 @@
 
   <!-- ============================================================
        HERO / LANDING VIEW — instrument panel clock, curved nav rail,
-       pointer that tracks whichever nav item is hovered, portrait.
+       pointer that tracks whichever nav item is hovered, floating
+       photo collage (portrait + gallery photos).
        ============================================================ -->
   <section class="hero" id="hero">
     <div class="hero-grid-lines" aria-hidden="true"></div>
@@ -59,15 +60,58 @@
         </nav>
       </div>
 
-      <!-- Self portrait -->
-      <div class="hero-portrait">
-        <div class="portrait-frame">
-          <!-- Replace src below with your own photo, e.g. "portrait.jpg" -->
-          <img src="portrait.jpg" alt="Portrait of Jaylani Gailani" id="portraitImg">
-          <div class="portrait-placeholder" id="portraitPlaceholder">
-            <span>Add<br><code>portrait.jpg</code><br>to this folder</span>
+      <!-- Floating photo collage: portrait + 6 gallery photos.
+           Upload frontpagepic1.jpg through frontpagepic6.jpg alongside
+           portrait.jpg — any tile without a matching file just hides
+           itself instead of showing a broken image icon. -->
+      <div class="hero-photo-collage">
+
+        <div class="floating-photo tile-span-3">
+          <div class="gallery-frame">
+            <img src="frontpagepic1.jpg" alt="">
           </div>
         </div>
+
+        <div class="floating-photo tile-portrait tile-span-4">
+          <div class="portrait-frame">
+            <!-- Replace src below with your own photo, e.g. "portrait.jpg" -->
+            <img src="portrait.jpg" alt="Portrait of Jaylani Gailani" id="portraitImg">
+            <div class="portrait-placeholder" id="portraitPlaceholder">
+              <span>Add<br><code>portrait.jpg</code><br>to this folder</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="floating-photo tile-span-2">
+          <div class="gallery-frame">
+            <img src="frontpagepic2.jpg" alt="">
+          </div>
+        </div>
+
+        <div class="floating-photo tile-span-3">
+          <div class="gallery-frame">
+            <img src="frontpagepic3.jpg" alt="">
+          </div>
+        </div>
+
+        <div class="floating-photo tile-span-2">
+          <div class="gallery-frame">
+            <img src="frontpagepic4.jpg" alt="">
+          </div>
+        </div>
+
+        <div class="floating-photo tile-span-4">
+          <div class="gallery-frame">
+            <img src="frontpagepic5.jpg" alt="">
+          </div>
+        </div>
+
+        <div class="floating-photo tile-span-2">
+          <div class="gallery-frame">
+            <img src="frontpagepic6.jpg" alt="">
+          </div>
+        </div>
+
       </div>
 
     </div>
@@ -103,14 +147,27 @@
         <p>
           I am an Electrical Engineering student at Rutgers University focusing on power systems, electronics, and embedded systems. This portfolio documents my ongoing academic research, technical skills, and engineering projects as I work toward building hardware and software solutions.
         </p>
+
+        <h3 class="about-subheading">Beyond the Classroom</h3>
+        <div class="chip-row">
+          <span class="chip">MEET — Minority Engineering Educational Task</span>
+          <span class="chip">Rutgers IEEE</span>
+          <span class="chip">PCRF — Palestine Children's Relief Fund</span>
+          <span class="chip">MSA — Muslim Student Association</span>
+          <span class="chip">Sudan Aid 911 Volunteer</span>
+          <span class="chip">Soccer</span>
+        </div>
+        <p class="about-note">
+          I volunteer with Sudan Aid 911 running booths at charity events, and play competitive soccer in a men's league outside of coursework and research.
+        </p>
       </div>
     </section>
 
     <!-- Technical Skills Section (Pulled from Resume) -->
     <section id="skills">
       <h2>Technical Skills</h2>
-      
-            <div class="skills-container">
+
+      <div class="skills-container">
         <div class="skill-group">
           <h3>Hardware & Lab</h3>
           <p>Oscilloscope, Multimeter, Signal Generator, Power Supply, Breadboard Prototyping, Soldering, 3D Printing (CAD-Designed Mounts)</p>
@@ -146,6 +203,7 @@
           <p>Python (NumPy, Matplotlib, Tkinter, OpenCV), C / C++, MATLAB, Java, HTML/CSS/JavaScript, Git & GitHub, PowerShell</p>
         </div>
       </div>
+    </section>
 
     <!-- Experience Section -->
     <section id="experience">
