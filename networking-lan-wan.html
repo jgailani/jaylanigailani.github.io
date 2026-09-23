@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LAN/WAN Network with Static Routing | Jaylani Gailani</title>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Top Navigation Bar -->
+  <nav>
+    <a href="projects.html">← Back to Projects</a>
+    <a href="index.html">Main Portfolio</a>
+    <a href="#contact">Contact</a>
+  </nav>
+
+  <header>
+    <h1>LAN/WAN Network with Static Routing</h1>
+    <p class="subtitle">Two-Site Network Design & Configuration — Cisco Packet Tracer</p>
+  </header>
+
+  <main>
+    <article class="project-detail-card">
+      <div class="project-header">
+        <h2>Project Overview</h2>
+        <span class="badge completed">Completed</span>
+      </div>
+
+      <p class="project-tags">
+        <strong>Tools & Concepts:</strong> Cisco Packet Tracer, Cisco IOS CLI, Static Routing, Subnetting, TCP/IP Model, Layer 2 Switching vs. Layer 3 Routing
+      </p>
+
+      <p class="project-summary">
+        I designed and configured a two-site network in Cisco Packet Tracer to get real hands-on practice with core LAN/WAN concepts instead of just reading about them. The setup is two separate local area networks — 192.168.1.0/24 and 192.168.2.0/24 — each with a switch and three end devices, connected across a simulated WAN link between two routers over a point-to-point serial connection addressed as a /30 (10.0.0.0/30).
+      </p>
+
+      <h3>Topology</h3>
+      <p class="project-summary">
+        LAN 1 (Switch0 + PC0–PC2) connects to Router0's LAN interface, and LAN 2 (Switch1 + PC3–PC5) connects to Router1's LAN interface. The two routers are joined by a serial WAN link — Packet Tracer's stand-in for a long-haul leased line — with Router0 acting as the DCE (clocking) end and Router1 as the DTE end.
+      </p>
+
+      <div class="image-gallery">
+        <div class="img-container">
+          <img src="networking5.jpg" alt="Full network topology showing both LANs, switches, routers, and the WAN link">
+          <p class="img-caption">1. Full topology — two LANs joined by a serial WAN link</p>
+        </div>
+      </div>
+
+      <h3>IP Addressing Plan</h3>
+      <p class="project-summary">
+        I wrote out the full addressing plan before touching any configuration — this is exactly what I'd hand to a network tech, and it's what I actually referenced while configuring each device.
+      </p>
+      <ul class="project-bullets">
+        <li><strong>LAN 1 (192.168.1.0/24):</strong> PC0 .10, PC1 .11, PC2 .12 — gateway 192.168.1.1 (Router0's Gig0/0)</li>
+        <li><strong>LAN 2 (192.168.2.0/24):</strong> PC3 .10, PC4 .11, PC5 .12 — gateway 192.168.2.1 (Router1's Gig0/0)</li>
+        <li><strong>WAN link (10.0.0.0/30):</strong> Router0's Se0/0/0 at 10.0.0.1, Router1's Se0/0/0 at 10.0.0.2</li>
+        <li>I used a /30 on the WAN link on purpose rather than a /24 — a point-to-point link between exactly two routers only needs 2 usable addresses, so a /30 (4 addresses, 2 usable) is the non-wasteful choice for that link.</li>
+      </ul>
+
+      <h3>Router Configuration</h3>
+      <p class="project-summary">
+        Each router needed an IP address on its LAN-facing interface, an IP address on its WAN-facing serial interface, and a static route telling it how to reach the subnet it isn't directly connected to. On Router0, that meant <code>ip route 192.168.2.0 255.255.255.0 10.0.0.2</code> — "for anything in the 192.168.2.0/24 network, send it to Router1's WAN interface and let Router1 handle it from there." Router1 got the mirror-image route back to 192.168.1.0/24. Neither router needs to know the other's LAN topology in detail — just the next hop to get traffic pointed the right direction.
+      </p>
+
+      <h3>Verifying It Actually Works</h3>
+      <p class="project-summary">
+        Configuring it is one thing — proving it works end-to-end is the part that actually matters. I checked interface status and routing tables on both routers, then tested real traffic crossing the WAN link.
+      </p>
+
+      <div class="image-gallery">
+        <div class="img-container">
+          <img src="networking1.jpg" alt="Router0 show ip interface brief output, all interfaces up/up">
+          <p class="img-caption">2. Router0 — <code>show ip interface brief</code>, all interfaces up/up</p>
+        </div>
+        <div class="img-container">
+          <img src="networking2.jpg" alt="Router1 show ip interface brief output, all interfaces up/up">
+          <p class="img-caption">3. Router1 — <code>show ip interface brief</code>, all interfaces up/up</p>
+        </div>
+        <div class="img-container">
+          <img src="networking3.jpg" alt="Router0 show ip route output with static route to 192.168.2.0">
+          <p class="img-caption">4. Router0 — <code>show ip route</code>, static route to 192.168.2.0/24</p>
+        </div>
+        <div class="img-container">
+          <img src="networking4.jpg" alt="Router1 show ip route output with static route to 192.168.1.0">
+          <p class="img-caption">5. Router1 — <code>show ip route</code>, static route to 192.168.1.0/24</p>
+        </div>
+      </div>
+
+      <ul class="project-bullets">
+        <li>Both routers show every configured interface as <strong>up/up</strong> — confirmation that no interface was left administratively shut down and no serial clocking issue was silently killing the line.</li>
+        <li>Both routing tables show a directly connected network (marked <code>C</code>) for their own LAN and a static route (marked <code>S</code>) for the far-side LAN — proof the static routing configuration actually took.</li>
+      </ul>
+
+      <h3>Cross-WAN Ping & Traceroute</h3>
+      <p class="project-summary">
+        The real proof is traffic actually crossing the WAN link. I pinged PC3 (192.168.2.10) from PC0, which forces the packet through the entire chain: PC0 → its gateway (Router0) → across the WAN link → Router1 → PC3's LAN → PC3, then all the way back for the reply.
+      </p>
+
+      <div class="image-gallery">
+        <div class="img-container">
+          <img src="networking6.jpg" alt="Successful ping from PC0 to PC3 across the WAN link, 4 sent 4 received 0 lost">
+          <p class="img-caption">6. Ping from PC0 to 192.168.2.10 — 4 sent, 4 received, 0 lost</p>
+        </div>
+        <div class="img-container">
+          <img src="networking7.jpg" alt="Tracert from PC0 to PC3 showing each hop across the WAN">
+          <p class="img-caption">7. Tracert showing the hop-by-hop path: PC0 → Router0 → Router1 → PC3</p>
+        </div>
+      </div>
+
+      <p class="project-summary">
+        The traceroute is the more interesting artifact of the two — it makes the abstract idea of "routing" concrete by actually showing each hop the packet takes: local gateway, then the far router, then the destination.
+      </p>
+
+      <div class="image-gallery">
+        <div class="img-container">
+          <img src="networking8.jpg" alt="Static IP configuration on a PC showing IP address, subnet mask, and gateway">
+          <p class="img-caption">8. Static IP configuration on a PC — no DHCP involved</p>
+        </div>
+      </div>
+
+      <h3>What I Actually Learned</h3>
+      <div class="callout-box">
+        <ul class="project-bullets">
+          <li><strong>Switching vs. routing is the whole ballgame:</strong> Devices on the same LAN talk directly at Layer 2 through the switch using MAC addresses — no router involved at all. It's only when traffic needs to leave the local subnet that a router (Layer 3, IP addresses) gets involved, and that distinction is really the core of the entire project.</li>
+          <li><strong>A router's interfaces are shut down by default:</strong> Every interface needs an explicit <code>no shutdown</code> before it'll pass traffic — a router with a fully correct IP address and route still won't work if you forget this one line.</li>
+          <li><strong>Serial WAN links need explicit clocking:</strong> One end of a point-to-point serial link has to act as DCE and provide a clock rate; the other syncs to it as DTE. Get this wrong — set it on both ends, or neither — and the line protocol stays down even though everything else looks correctly configured.</li>
+          <li><strong>Each router only needs to know its own next hop:</strong> Router0 doesn't need to understand Router1's entire LAN — it just needs one static route saying "traffic for 192.168.2.0/24 goes to 10.0.0.2" and trusts Router1 to handle it from there. That's a much smaller mental model than I expected going in.</li>
+        </ul>
+      </div>
+    </article>
+  </main>
+
+  <footer id="contact">
+    <p>
+      <a href="projects.html">Projects Directory</a> | 
+      <a href="index.html">Main Portfolio</a> | 
+      <a href="mailto:jaylanigailani90@gmail.com">Email Me</a>
+    </p>
+  </footer>
+
+</body>
+</html>
