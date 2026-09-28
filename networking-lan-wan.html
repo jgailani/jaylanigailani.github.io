@@ -43,7 +43,7 @@
 
       <div class="image-gallery">
         <div class="img-container">
-          <img src="networking5.jpg" alt="Full network topology showing both LANs, switches, routers, and the WAN link">
+          <img src="networking1.PNG" alt="Full network topology showing both LANs, switches, routers, and the WAN link">
           <p class="img-caption">1. Full topology — two LANs joined by a serial WAN link</p>
         </div>
       </div>
@@ -52,10 +52,18 @@
       <p class="project-summary">
         I wrote out the full addressing plan before touching any configuration — this is exactly what I'd hand to a network tech, and it's what I actually referenced while configuring each device.
       </p>
+
+      <div class="image-gallery">
+        <div class="img-container">
+          <img src="networking2.PNG" alt="IP addressing plan table for all devices">
+          <p class="img-caption">2. Addressing plan I worked from (the WAN link ended up on each router's Serial0/1/0 port)</p>
+        </div>
+      </div>
+
       <ul class="project-bullets">
         <li><strong>LAN 1 (192.168.1.0/24):</strong> PC0 .10, PC1 .11, PC2 .12 — gateway 192.168.1.1 (Router0's Gig0/0)</li>
         <li><strong>LAN 2 (192.168.2.0/24):</strong> PC3 .10, PC4 .11, PC5 .12 — gateway 192.168.2.1 (Router1's Gig0/0)</li>
-        <li><strong>WAN link (10.0.0.0/30):</strong> Router0's Se0/0/0 at 10.0.0.1, Router1's Se0/0/0 at 10.0.0.2</li>
+        <li><strong>WAN link (10.0.0.0/30):</strong> Router0's Serial0/1/0 at 10.0.0.1, Router1's Serial0/1/0 at 10.0.0.2</li>
         <li>I used a /30 on the WAN link on purpose rather than a /24 — a point-to-point link between exactly two routers only needs 2 usable addresses, so a /30 (4 addresses, 2 usable) is the non-wasteful choice for that link.</li>
       </ul>
 
@@ -71,41 +79,41 @@
 
       <div class="image-gallery">
         <div class="img-container">
-          <img src="networking1.jpg" alt="Router0 show ip interface brief output, all interfaces up/up">
-          <p class="img-caption">2. Router0 — <code>show ip interface brief</code>, all interfaces up/up</p>
+          <img src="networking3.PNG" alt="Router0 show ip interface brief output, configured interfaces up/up">
+          <p class="img-caption">3. Router0 — <code>show ip interface brief</code>, configured interfaces up/up</p>
         </div>
         <div class="img-container">
-          <img src="networking2.jpg" alt="Router1 show ip interface brief output, all interfaces up/up">
-          <p class="img-caption">3. Router1 — <code>show ip interface brief</code>, all interfaces up/up</p>
+          <img src="networking4.PNG" alt="Router1 show ip interface brief output, configured interfaces up/up">
+          <p class="img-caption">4. Router1 — <code>show ip interface brief</code>, configured interfaces up/up</p>
         </div>
         <div class="img-container">
-          <img src="networking3.jpg" alt="Router0 show ip route output with static route to 192.168.2.0">
-          <p class="img-caption">4. Router0 — <code>show ip route</code>, static route to 192.168.2.0/24</p>
+          <img src="networking5.PNG" alt="Router0 show ip route output with static route to 192.168.2.0">
+          <p class="img-caption">5. Router0 — <code>show ip route</code>, static route to 192.168.2.0/24</p>
         </div>
         <div class="img-container">
-          <img src="networking4.jpg" alt="Router1 show ip route output with static route to 192.168.1.0">
-          <p class="img-caption">5. Router1 — <code>show ip route</code>, static route to 192.168.1.0/24</p>
+          <img src="networking6.PNG" alt="Router1 show ip route output with static route to 192.168.1.0">
+          <p class="img-caption">6. Router1 — <code>show ip route</code>, static route to 192.168.1.0/24</p>
         </div>
       </div>
 
       <ul class="project-bullets">
-        <li>Both routers show every configured interface as <strong>up/up</strong> — confirmation that no interface was left administratively shut down and no serial clocking issue was silently killing the line.</li>
+        <li>Both routers show every interface I configured (Gig0/0 and Serial0/1/0) as <strong>up/up</strong> — confirmation that no interface was left administratively shut down and no serial clocking issue was silently killing the line.</li>
         <li>Both routing tables show a directly connected network (marked <code>C</code>) for their own LAN and a static route (marked <code>S</code>) for the far-side LAN — proof the static routing configuration actually took.</li>
       </ul>
 
       <h3>Cross-WAN Ping & Traceroute</h3>
       <p class="project-summary">
-        The real proof is traffic actually crossing the WAN link. I pinged PC3 (192.168.2.10) from PC0, which forces the packet through the entire chain: PC0 → its gateway (Router0) → across the WAN link → Router1 → PC3's LAN → PC3, then all the way back for the reply.
+        The real proof is traffic actually crossing the WAN link. I pinged PC3 (192.168.2.10) from PC0, which forces the packet through the entire chain: PC0 → its gateway (Router0) → across the WAN link → Router1 → PC3's LAN → PC3, then all the way back for the reply. The first request timed out and the next three came back (TTL 126, about 2–7 ms) — that first loss is typical when devices are still learning each other's MAC addresses for the first time, and everything after it went through cleanly.
       </p>
 
       <div class="image-gallery">
         <div class="img-container">
-          <img src="networking6.jpg" alt="Successful ping from PC0 to PC3 across the WAN link, 4 sent 4 received 0 lost">
-          <p class="img-caption">6. Ping from PC0 to 192.168.2.10 — 4 sent, 4 received, 0 lost</p>
+          <img src="networking7.PNG" alt="Ping from PC0 to PC3 across the WAN link, 3 of 4 replies received">
+          <p class="img-caption">7. Ping from PC0 to 192.168.2.10 — first request timed out, then 3 replies</p>
         </div>
         <div class="img-container">
-          <img src="networking7.jpg" alt="Tracert from PC0 to PC3 showing each hop across the WAN">
-          <p class="img-caption">7. Tracert showing the hop-by-hop path: PC0 → Router0 → Router1 → PC3</p>
+          <img src="networking8.PNG" alt="Tracert from PC0 to PC3 showing each hop across the WAN">
+          <p class="img-caption">8. Tracert showing the hop-by-hop path: 192.168.1.1 → 10.0.0.2 → 192.168.2.10</p>
         </div>
       </div>
 
@@ -115,8 +123,8 @@
 
       <div class="image-gallery">
         <div class="img-container">
-          <img src="networking8.jpg" alt="Static IP configuration on a PC showing IP address, subnet mask, and gateway">
-          <p class="img-caption">8. Static IP configuration on a PC — no DHCP involved</p>
+          <img src="networking9.PNG" alt="Static IP configuration on PC0 showing IP address, subnet mask, and gateway">
+          <p class="img-caption">9. Static IP configuration on PC0 — no DHCP involved</p>
         </div>
       </div>
 
